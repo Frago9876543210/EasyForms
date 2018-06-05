@@ -13,6 +13,7 @@ use Frago9876543210\EasyForms\forms\ServerSettingsForm;
 use Frago9876543210\EasyForms\utils\PlayerFormData;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
@@ -22,7 +23,7 @@ use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
 class EasyForms extends PluginBase implements Listener{
-	public const SERVER_SETTINGS_ID = 0xffff;
+	public const SERVER_SETTINGS_ID = 1698473874;
 
 	/** @var Map */
 	private static $forms;
@@ -38,6 +39,10 @@ class EasyForms extends PluginBase implements Listener{
 		self::$forms->put($e->getPlayer(), new PlayerFormData);
 	}
 
+	public function onQuit(PlayerQuitEvent $e) : void{
+		self::$forms->remove($e->getPlayer(), null);
+	}
+
 	private static function getFormData(Player $player) : ?PlayerFormData{
 		return self::$forms->get($player, null);
 	}
@@ -45,7 +50,7 @@ class EasyForms extends PluginBase implements Listener{
 	public static function sendForm(Player $player, Form $form) : void{
 		$formData = self::getFormData($player);
 		$pk = new ModalFormRequestPacket;
-		$pk->formId = $formData->formId++;
+		$pk->formId = mt_rand(0, PHP_INT_MAX);
 		$pk->formData = json_encode($form);
 		$player->dataPacket($pk);
 		$formData->windows[$pk->formId] = $form;
