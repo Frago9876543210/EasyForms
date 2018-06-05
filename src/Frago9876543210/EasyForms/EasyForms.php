@@ -9,18 +9,25 @@ use Frago9876543210\EasyForms\abstracts\Form;
 use Frago9876543210\EasyForms\forms\CustomForm;
 use Frago9876543210\EasyForms\forms\MenuForm;
 use Frago9876543210\EasyForms\forms\ModalForm;
+use Frago9876543210\EasyForms\forms\ServerSettingsForm;
 use Frago9876543210\EasyForms\utils\PlayerFormData;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\protocol\ModalFormRequestPacket;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use pocketmine\network\mcpe\protocol\ServerSettingsRequestPacket;
+use pocketmine\network\mcpe\protocol\ServerSettingsResponsePacket;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
 class EasyForms extends PluginBase implements Listener{
+	public const SERVER_SETTINGS_ID = 0xffff;
+
 	/** @var Map */
 	private static $forms;
+	/** @var null|ServerSettingsForm */
+	public static $settings;
 
 	public function onEnable() : void{
 		self::$forms = new Map;
@@ -47,10 +54,11 @@ class EasyForms extends PluginBase implements Listener{
 	public function onModalFormResponse(DataPacketReceiveEvent $e) : void{
 		$pk = $e->getPacket();
 		if($pk instanceof ModalFormResponsePacket){
+			$isSettings = self::$settings !== null && $pk->formId === self::SERVER_SETTINGS_ID;
 			try{
 				$formData = self::getFormData($player = $e->getPlayer());
-				if(isset($formData->windows[$pk->formId])){
-					$form = $formData->windows[$pk->formId];
+				if(isset($formData->windows[$pk->formId]) || $isSettings){
+					$form = $isSettings ? self::$settings : $formData->windows[$pk->formId];
 					if(($response = json_decode($pk->formData, true)) === null){
 						$form->onClose($player);
 					}else{
@@ -58,17 +66,24 @@ class EasyForms extends PluginBase implements Listener{
 							$form->onSubmit($player, $response);
 						}elseif($form instanceof ModalForm && is_bool($response)){
 							$form->onSubmit($player, $response);
-						}elseif($form instanceof CustomForm && is_array($response)){
+						}elseif(($form instanceof CustomForm || $form instanceof ServerSettingsForm) && is_array($response)){
 							$form->onSubmit($player, $response);
 						}else{
 							$this->getLogger()->debug("Received wrong form data from {$player->getName()}");
 						}
 					}
-					unset($formData->windows[$pk->formId]);
+					if(!$isSettings){
+						unset($formData->windows[$pk->formId]);
+					}
 				}
 			}catch(\Throwable $e){
 				$this->getLogger()->logException($e);
 			}
+		}elseif($pk instanceof ServerSettingsRequestPacket){
+			$pk = new ServerSettingsResponsePacket;
+			$pk->formId = self::SERVER_SETTINGS_ID;
+			$pk->formData = json_encode(self::$settings);
+			$e->getPlayer()->dataPacket($pk);
 		}
 	}
 }

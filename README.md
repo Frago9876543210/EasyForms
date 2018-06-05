@@ -54,3 +54,17 @@ EasyForms::sendForm($sender, new CustomForm("Enter data", [
 ```
 ![custom1](https://i.imgur.com/biAoc91.png)
 ![custom2](https://i.imgur.com/AFkpS7b.png)
+### ServerSettingsForm
+```php
+EasyForms::$settings = new ServerSettingsForm("Server settings", [
+		new Label("Some text"),
+		new class("Mute chat") extends Toggle{
+			public function handle(Player $player, $value) : void{
+				$player->sendMessage($value ? "enabled" : "disabled");
+			}
+		}
+	]
+);
+```
+![settigs](https://i.imgur.com/Ab0IaTl.png)
+__But this form can only be used one time__
