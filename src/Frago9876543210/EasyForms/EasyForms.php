@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms;
 
 use Ds\Map;
-use Frago9876543210\EasyForms\abstracts\Form;
 use Frago9876543210\EasyForms\forms\CustomForm;
+use Frago9876543210\EasyForms\forms\Form;
 use Frago9876543210\EasyForms\forms\MenuForm;
 use Frago9876543210\EasyForms\forms\ModalForm;
 use Frago9876543210\EasyForms\forms\ServerSettingsForm;
