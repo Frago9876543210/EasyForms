@@ -54,7 +54,7 @@ EasyForms::sendForm($sender, new CustomForm("Enter data", [
 ```
 ![custom1](https://i.imgur.com/biAoc91.png)
 ![custom2](https://i.imgur.com/AFkpS7b.png)
-### ServerSettingsForm
+#### ServerSettingsForm
 ```php
 EasyForms::$settings = new ServerSettingsForm("Server settings", [
 		new Label("Some text"),
