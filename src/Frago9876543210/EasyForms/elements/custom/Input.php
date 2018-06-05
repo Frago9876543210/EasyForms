@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\elements\custom;
 
 
-use Frago9876543210\EasyForms\abstracts\Element;
+use Frago9876543210\EasyForms\elements\Element;
 
 class Input extends Element{
 	/** @var string */
