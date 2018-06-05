@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\forms;
 
 
-use Frago9876543210\EasyForms\abstracts\Element;
-use Frago9876543210\EasyForms\abstracts\Form;
 use pocketmine\Player;
 
 class CustomForm extends Form{
