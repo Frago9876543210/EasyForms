@@ -1,4 +1,6 @@
 # EasyForms
+[![](https://poggit.pmmp.io/shield.state/EasyForms)](https://poggit.pmmp.io/p/EasyForms)
+
 Plugin for pmmp that allow you create GUI in a few clicks.
 ### Code samples
 #### ModalForm
