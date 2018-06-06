@@ -15,31 +15,44 @@ class MenuForm extends Form{
 	protected $text;
 
 	/**
-	 * Menu constructor.
-	 * @param string   $title
-	 * @param string   $text
-	 * @param Button[] $buttons
+	 * MenuForm constructor.
+	 * @param string      $title
+	 * @param null|string $text
+	 * @param Button[]    $buttons
 	 */
-	public function __construct(string $title, string $text, array $buttons){
+	public function __construct(string $title, ?string $text = null, array $buttons){
 		parent::__construct($title);
 		$this->text = $text;
 		$this->buttons = $buttons;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getType() : string{
 		return self::TYPE_MENU;
 	}
 
+	/**
+	 * @param Player $player
+	 * @param mixed  $response
+	 */
 	public function onSubmit(Player $player, $response) : void{
-		if(isset($this->buttons[$response])){
-			$this->buttons[$response]->handle($player, $response);
+		if(!(is_int($response) || isset($this->buttons[$response]))){
+			return;
+		}else{
+			var_dump("ok");
 		}
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function serializeFormData() : array{
-		return [
-			"content" => $this->text,
-			"buttons" => $this->buttons
-		];
+		$data = ["buttons" => $this->buttons];
+		if($this->text !== null){
+			$data["content"] = $this->text;
+		}
+		return $data;
 	}
 }

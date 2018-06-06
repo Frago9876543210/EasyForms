@@ -17,6 +17,14 @@ class Slider extends Element{
 	/** @var float */
 	protected $default;
 
+	/**
+	 * Slider constructor.
+	 * @param string     $text
+	 * @param float      $min
+	 * @param float      $max
+	 * @param float      $step
+	 * @param float|null $default
+	 */
 	public function __construct(string $text, float $min, float $max, float $step = 1.0, ?float $default = null){
 		parent::__construct($text);
 		if($this->min > $this->max){
@@ -36,6 +44,34 @@ class Slider extends Element{
 			throw new \InvalidArgumentException("Step must be greater than zero");
 		}
 		$this->step = $step;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getMin() : float{
+		return $this->min;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getMax() : float{
+		return $this->max;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function getStep() : float{
+		return $this->step;
+	}
+
+	/**
+	 * @return float|null
+	 */
+	public function getDefault() : ?float{
+		return $this->default;
 	}
 
 	/**

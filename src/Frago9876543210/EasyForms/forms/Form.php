@@ -24,18 +24,6 @@ abstract class Form implements \JsonSerializable{
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getTitle() : string{
-		return $this->title;
-	}
-
-	/**
-	 * @return string
-	 */
-	abstract public function getType() : string;
-
-	/**
 	 * @param Player $player
 	 */
 	public function onClose(Player $player) : void{
@@ -56,6 +44,18 @@ abstract class Form implements \JsonSerializable{
 			"title" => $this->getTitle(), "type" => $this->getType()
 		], $this->serializeFormData());
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getTitle() : string{
+		return $this->title;
+	}
+
+	/**
+	 * @return string
+	 */
+	abstract public function getType() : string;
 
 	/**
 	 * @return array

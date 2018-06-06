@@ -21,14 +21,16 @@ class Button extends Element{
 		$this->image = $image;
 	}
 
+	/**
+	 * @return null|string
+	 */
 	public function getType() : ?string{
 		return null;
 	}
 
-	public function hasImage() : bool{
-		return $this->image !== null;
-	}
-
+	/**
+	 * @return array
+	 */
 	public function serializeElementData() : array{
 		$data = ["text" => $this->text];
 		if($this->hasImage()){
@@ -38,5 +40,12 @@ class Button extends Element{
 			];
 		}
 		return $data;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasImage() : bool{
+		return $this->image !== null;
 	}
 }

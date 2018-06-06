@@ -21,13 +21,6 @@ class ServerSettingsForm extends CustomForm{
 	}
 
 	/**
-	 * @return bool
-	 */
-	public function hasIcon() : bool{
-		return $this->icon !== null;
-	}
-
-	/**
 	 * @return array
 	 */
 	public function serializeFormData() : array{
@@ -39,5 +32,12 @@ class ServerSettingsForm extends CustomForm{
 			];
 		}
 		return $data;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasIcon() : bool{
+		return $this->icon !== null;
 	}
 }

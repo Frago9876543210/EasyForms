@@ -26,6 +26,20 @@ class Input extends Element{
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getPlaceholder() : string{
+		return $this->placeholder;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDefault() : string{
+		return $this->default;
+	}
+
+	/**
 	 * @return null|string
 	 */
 	public function getType() : ?string{

@@ -7,10 +7,16 @@ namespace Frago9876543210\EasyForms\elements\custom;
 
 class StepSlider extends Dropdown{
 
+	/**
+	 * @return string
+	 */
 	public function getType() : string{
 		return "step_slider";
 	}
 
+	/**
+	 * @return array
+	 */
 	public function serializeElementData() : array{
 		return [
 			"steps" => $this->options,

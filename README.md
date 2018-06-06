@@ -14,45 +14,49 @@ EasyForms::sendForm($sender, new class("A small question", "Our server is cool?"
 ![modal](https://i.imgur.com/eI2xaBL.png)
 #### MenuForm
 ```php
-EasyForms::sendForm($sender, new MenuForm("Select server", "Choose server", [
-	new class("SkyWars #1", "https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/1/19/Melon.png") extends Button{
-		public function handle(Player $player, $value) : void{
-			$player->sendMessage("You selected: " . $this->text);
-		}
+EasyForms::sendForm($sender, new class("Select server", "Choose server", [
+	new Button("SkyWars #1", "https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/1/19/Melon.png")
+]) extends MenuForm{
+	public function onSubmit(Player $player, $response) : void{
+		parent::onSubmit($player, $response);
+		$player->sendMessage("You selected: " . $this->buttons[$response]->getText());
 	}
-]));
+});
 ```
 ![menu](https://i.imgur.com/QewDqkc.png)
 #### CustomForm
 ```php
-EasyForms::sendForm($sender, new CustomForm("Enter data", [
-	new class("Select product", ["beer", "cheese", "cola"]) extends Dropdown{
-		public function handle(Player $player, $value) : void{
-			$player->sendMessage("You selected: " . $this->options[$value]);
-		}
-	},
-	new class("Enter your name", "Bob") extends Input{
-		public function handle(Player $player, $value) : void{
-			$player->sendMessage("Your name is $value");
-		}
-	},
-	new Label("I am label!"), //it is useless to process, $value will be null
-	new class("Select count", 0.0, 100.0, 1.0, 50.0) extends Slider{
-		public function handle(Player $player, $value) : void{
-			$player->sendMessage("Count: $value");
-		}
-	},
-	new class("Select product", ["beer", "cheese", "cola"]) extends StepSlider{ //like dropdown, but it is slider
-		public function handle(Player $player, $value) : void{
-			$player->sendMessage("You selected: " . $this->options[$value]);
-		}
-	},
-	new class("Creative") extends Toggle{
-		public function handle(Player $player, $value) : void{
-			$player->setGamemode($value ? 1 : 0);
-		}
+EasyForms::sendForm($sender, new class("Enter data", [
+	new Dropdown("Select product", ["beer", "cheese", "cola"]),
+	new Input("Enter your name", "Bob"),
+	new Label("I am label!"),
+	new Slider("Select count", 0.0, 100.0, 1.0, 50.0),
+	new StepSlider("Select product", ["beer", "cheese", "cola"]),
+	new Toggle("Creative", $sender->isCreative())
+]) extends CustomForm{
+	public function onSubmit(Player $player, $response) : void{
+		parent::onSubmit($player, $response);
+		/** @var Dropdown $dropdown */
+		$dropdown = $this->elements[0];
+		$player->sendMessage("You selected: {$dropdown->getSelectedOption()}");
+
+		/** @var Input $input */
+		$input = $this->elements[1];
+		$player->sendMessage("Your name is {$input->getValue()}");
+
+		/** @var Slider $slider */
+		$slider = $this->elements[3];
+		$player->sendMessage("Count: {$slider->getValue()}");
+
+		/** @var StepSlider $stepSlider */
+		$stepSlider = $this->elements[4];
+		$player->sendMessage("You selected: {$stepSlider->getSelectedOption()}");
+
+		/** @var Toggle $toggle */
+		$toggle = $this->elements[5];
+		$player->setGamemode($toggle->getValue() ? 1 : 0);
 	}
-]));
+});
 ```
 ![custom1](https://i.imgur.com/biAoc91.png)
 ![custom2](https://i.imgur.com/AFkpS7b.png)

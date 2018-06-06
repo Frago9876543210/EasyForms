@@ -9,17 +9,30 @@ use Frago9876543210\EasyForms\elements\Element;
 
 class Toggle extends Element{
 	/** @var bool */
-	private $default;
+	protected $default;
 
 	public function __construct(string $text, bool $default = false){
 		parent::__construct($text);
 		$this->default = $default;
 	}
 
+	/**
+	 * @return bool
+	 */
+	public function getDefault() : bool{
+		return $this->default;
+	}
+
+	/**
+	 * @return null|string
+	 */
 	public function getType() : ?string{
 		return "toggle";
 	}
 
+	/**
+	 * @return array
+	 */
 	public function serializeElementData() : array{
 		return [
 			"default" => $this->default

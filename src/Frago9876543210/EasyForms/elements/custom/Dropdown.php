@@ -25,6 +25,33 @@ class Dropdown extends Element{
 		$this->default = $default;
 	}
 
+	/**
+	 * @return array
+	 */
+	public function getOptions() : array{
+		return $this->options;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getSelectedOption() : ?string{
+		if($this->value !== null && isset($this->options[$this->value])){
+			return $this->options[$this->value];
+		}
+		return null;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getDefault() : int{
+		return $this->default;
+	}
+
+	/**
+	 * @return null|string
+	 */
 	public function getType() : ?string{
 		return "dropdown";
 	}

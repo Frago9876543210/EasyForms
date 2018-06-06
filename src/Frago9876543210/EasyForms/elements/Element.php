@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\elements;
 
 
-use pocketmine\Player;
-
 abstract class Element implements \JsonSerializable{
 	/** @var string */
 	protected $text;
+	/** @var null|mixed */
+	protected $value;
 
 	/**
 	 * Element constructor.
@@ -17,6 +17,31 @@ abstract class Element implements \JsonSerializable{
 	 */
 	public function __construct(string $text){
 		$this->text = $text;
+	}
+
+	/**
+	 * @return mixed|null
+	 */
+	public function getValue(){
+		return $this->value;
+	}
+
+	/**
+	 * @param null|mixed $value
+	 */
+	public function setValue($value){
+		$this->value = $value;
+	}
+
+	/**
+	 * @return array
+	 */
+	final public function jsonSerialize() : array{
+		$array = ["text" => $this->getText()];
+		if($this->getType() !== null){
+			$array["type"] = $this->getType();
+		}
+		return $array + $this->serializeElementData();
 	}
 
 	/**
@@ -34,23 +59,5 @@ abstract class Element implements \JsonSerializable{
 	/**
 	 * @return array
 	 */
-	final public function jsonSerialize() : array{
-		$array = ["text" => $this->getText()];
-		if($this->getType() !== null){
-			$array["type"] = $this->getType();
-		}
-		return $array + $this->serializeElementData();
-	}
-
-	/**
-	 * @return array
-	 */
 	abstract public function serializeElementData() : array;
-
-	/**
-	 * @param Player $player
-	 * @param mixed  $value
-	 */
-	public function handle(Player $player, $value) : void{
-	}
 }
