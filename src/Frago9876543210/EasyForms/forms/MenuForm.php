@@ -17,10 +17,10 @@ class MenuForm extends Form{
 	/**
 	 * MenuForm constructor.
 	 * @param string      $title
-	 * @param null|string $text
+	 * @param string $text
 	 * @param Button[]    $buttons
 	 */
-	public function __construct(string $title, ?string $text = null, array $buttons){
+	public function __construct(string $title, string $text = null, array $buttons){
 		parent::__construct($title);
 		$this->text = $text;
 		$this->buttons = $buttons;
@@ -40,8 +40,6 @@ class MenuForm extends Form{
 	public function onSubmit(Player $player, $response) : void{
 		if(!(is_int($response) || isset($this->buttons[$response]))){
 			return;
-		}else{
-			var_dump("ok");
 		}
 	}
 
@@ -49,10 +47,9 @@ class MenuForm extends Form{
 	 * @return array
 	 */
 	protected function serializeFormData() : array{
-		$data = ["buttons" => $this->buttons];
-		if($this->text !== null){
-			$data["content"] = $this->text;
-		}
-		return $data;
+		return [
+			"buttons" => $this->buttons,
+			"content" => $this->text
+		];
 	}
 }
