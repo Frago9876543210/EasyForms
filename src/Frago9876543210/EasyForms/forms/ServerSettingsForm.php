@@ -7,7 +7,7 @@ namespace Frago9876543210\EasyForms\forms;
 
 class ServerSettingsForm extends CustomForm{
 	/** @var null|string */
-	public $icon;
+	protected $icon;
 
 	/**
 	 * ServerSettingsForm constructor.
@@ -15,9 +15,16 @@ class ServerSettingsForm extends CustomForm{
 	 * @param array       $elements
 	 * @param null|string $icon
 	 */
-	public function __construct(string $title, array $elements, ?string $icon = null){
+	public function __construct(string $title, $elements, ?string $icon = null){
 		parent::__construct($title, $elements);
 		$this->icon = $icon;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasIcon() : bool{
+		return $this->icon !== null;
 	}
 
 	/**
@@ -32,12 +39,5 @@ class ServerSettingsForm extends CustomForm{
 			];
 		}
 		return $data;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function hasIcon() : bool{
-		return $this->icon !== null;
 	}
 }

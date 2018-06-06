@@ -62,15 +62,19 @@ EasyForms::sendForm($sender, new class("Enter data", [
 ![custom2](https://i.imgur.com/AFkpS7b.png)
 #### ServerSettingsForm
 ```php
-EasyForms::$settings = new ServerSettingsForm("Server settings", [
+public function onServerSettingsRequest(ServerSettingsRequestEvent $e) : void{
+	$player = $e->getPlayer();
+	EasyForms::sendForm($player, new class("Server settings", [
 		new Label("Some text"),
-		new class("Mute chat") extends Toggle{
-			public function handle(Player $player, $value) : void{
-				$player->sendMessage($value ? "enabled" : "disabled");
-			}
+		new Toggle("Fly", $player->isFlying())
+	], "http://icons.iconarchive.com/icons/double-j-design/diagram-free/128/settings-icon.png") extends ServerSettingsForm{
+		public function onSubmit(Player $player, $response) : void{
+			parent::onSubmit($player, $response);
+			/** @var Toggle $toggle */
+			$toggle = $this->elements[1];
+			$player->setAllowFlight((bool) $toggle->getValue());
 		}
-	]
-);
+	});
+}
 ```
-![settigs](https://i.imgur.com/Ab0IaTl.png)
-__But this form can only be used one time__
+![settings](https://i.imgur.com/Yic6LuA.png)

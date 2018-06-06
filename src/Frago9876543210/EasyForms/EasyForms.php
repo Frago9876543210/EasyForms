@@ -23,14 +23,21 @@ use pocketmine\plugin\PluginBase;
 
 class EasyForms extends PluginBase implements Listener{
 	public const SERVER_SETTINGS_ID = 1698473874;
-	/** @var null|ServerSettingsForm */
-	public static $settings;
+
 	/** @var Map */
 	private static $forms;
 
+	public function onEnable() : void{
+		self::$forms = new Map;
+		$this->getServer()->getPluginManager()->registerEvents($this, $this);
+	}
+
+	/* Interaction with forms */
+
 	public static function sendForm(Player $player, Form $form) : void{
-		$pk = new ModalFormRequestPacket;
-		$pk->formId = mt_rand(0, INT32_MAX);
+		$settings = $form instanceof ServerSettingsForm;
+		$pk = $settings ? new ServerSettingsResponsePacket : new ModalFormRequestPacket;
+		$pk->formId = $settings ? self::SERVER_SETTINGS_ID : mt_rand(0, INT32_MAX);
 		$pk->formData = json_encode($form);
 		$player->dataPacket($pk);
 		self::addForm($player, $pk->formId, $form);
@@ -42,10 +49,23 @@ class EasyForms extends PluginBase implements Listener{
 		self::$forms->put($player, $list);
 	}
 
-	public function onEnable() : void{
-		self::$forms = new Map;
-		$this->getServer()->getPluginManager()->registerEvents($this, $this);
+	private static function hasForm(Player $player, int $formId) : bool{
+		return isset(self::$forms->get($player, [])[$formId]);
 	}
+
+	private static function getForm(Player $player, int $formId) : ?Form{
+		return self::hasForm($player, $formId) ? self::$forms->get($player)[$formId] : null;
+	}
+
+	private static function removeForm(Player $player, int $formId) : void{
+		$list = self::$forms->get($player, []);
+		if(self::hasForm($player, $formId)){
+			unset($list[$formId]);
+		}
+		self::$forms->put($player, $list);
+	}
+
+	/* Event handlers */
 
 	public function onJoin(PlayerJoinEvent $e) : void{
 		self::$forms->put($e->getPlayer(), []);
@@ -58,28 +78,15 @@ class EasyForms extends PluginBase implements Listener{
 	public function onDataPacketReceive(DataPacketReceiveEvent $e) : void{
 		$pk = $e->getPacket();
 		if($pk instanceof ModalFormResponsePacket){
-			$isSettings = self::$settings !== null && $pk->formId === self::SERVER_SETTINGS_ID;
-			if(self::hasForm($player = $e->getPlayer(), $pk->formId) || $isSettings){
-				$form = $isSettings ? self::$settings : self::getForm($player, $pk->formId);
-				$this->handleModalFormResponse($player, $form, json_decode($pk->formData, true));
+			if(($form = self::getForm($player = $e->getPlayer(), $pk->formId)) !== null){
+				$this->handleModalFormResponse($player, $pk->formId, $form, json_decode($pk->formData, true));
 			}
 		}elseif($pk instanceof ServerSettingsRequestPacket){
-			$pk = new ServerSettingsResponsePacket;
-			$pk->formId = self::SERVER_SETTINGS_ID;
-			$pk->formData = json_encode(self::$settings);
-			$e->getPlayer()->dataPacket($pk);
+			$this->getServer()->getPluginManager()->callEvent(new ServerSettingsRequestEvent($this, $e->getPlayer()));
 		}
 	}
 
-	private static function hasForm(Player $player, int $formId) : bool{
-		return isset(self::$forms->get($player, [])[$formId]);
-	}
-
-	private static function getForm(Player $player, int $formId) : ?Form{
-		return self::hasForm($player, $formId) ? self::$forms->get($player)[$formId] : null;
-	}
-
-	public function handleModalFormResponse(Player $player, Form $form, $response) : void{
+	public function handleModalFormResponse(Player $player, int $formId, Form $form, $response) : void{
 		try{
 			if($response === null){
 				$form->onClose($player);
@@ -94,7 +101,7 @@ class EasyForms extends PluginBase implements Listener{
 					$this->getLogger()->debug("Received wrong form data from {$player->getName()}");
 				}
 			}
-			self::$forms->remove($player, null);
+			self::removeForm($player, $formId);
 		}catch(\Exception $e){
 			$this->getServer()->getLogger()->logException($e);
 		}

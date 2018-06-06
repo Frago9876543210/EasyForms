@@ -15,7 +15,7 @@ use pocketmine\Player;
 
 class CustomForm extends Form{
 	/** @var Element[] */
-	public $elements;
+	protected $elements;
 
 	/**
 	 * CustomForm constructor.
