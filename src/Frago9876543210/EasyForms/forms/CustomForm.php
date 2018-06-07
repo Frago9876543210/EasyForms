@@ -16,7 +16,7 @@ use pocketmine\Player;
 
 class CustomForm extends Form{
 	/** @var Element[] */
-	private $elements;
+	protected $elements;
 	/** @var Queue */
 	private $queue;
 
