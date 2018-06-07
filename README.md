@@ -71,7 +71,7 @@ public function onServerSettingsRequest(ServerSettingsRequestEvent $e) : void{
 		public function onSubmit(Player $player, $response) : void{
 			parent::onSubmit($player, $response);
 			/** @var Toggle $toggle */
-			$toggle = $this->elements[1];
+			$toggle = $this->popElement();
 			$player->setAllowFlight((bool) $toggle->getValue());
 		}
 	});
