@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\forms;
 
 
+use Ds\Queue;
 use Frago9876543210\EasyForms\elements\custom\Dropdown;
 use Frago9876543210\EasyForms\elements\custom\Input;
 use Frago9876543210\EasyForms\elements\custom\Label;
@@ -15,7 +16,9 @@ use pocketmine\Player;
 
 class CustomForm extends Form{
 	/** @var Element[] */
-	protected $elements;
+	private $elements;
+	/** @var Queue */
+	private $queue;
 
 	/**
 	 * CustomForm constructor.
@@ -25,6 +28,7 @@ class CustomForm extends Form{
 	public function __construct(string $title, array $elements){
 		parent::__construct($title);
 		$this->elements = $elements;
+		$this->queue = new Queue;
 	}
 
 	/**
@@ -37,13 +41,20 @@ class CustomForm extends Form{
 			if(
 				($element instanceof Dropdown && is_int($value)) ||
 				($element instanceof Input && is_string($value)) ||
-				($element instanceof Label && $value === null) ||
 				($element instanceof Slider && (is_float($value) || is_int($value)) && ($value >= $element->getMin() || $value <= $element->getMax())) ||
 				($element instanceof Toggle && is_bool($value))
 			){
+				$this->queue->push($element);
 				$element->setValue($value);
 			}
 		}
+	}
+
+	/**
+	 * @return Element
+	 */
+	public function popElement() : Element{
+		return $this->queue->pop();
 	}
 
 	/**
