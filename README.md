@@ -29,7 +29,7 @@ EasyForms::sendForm($sender, new class("Select server", "Choose server", [
 EasyForms::sendForm($sender, new class("Enter data", [
 	new Dropdown("Select product", ["beer", "cheese", "cola"]),
 	new Input("Enter your name", "Bob"),
-	new Label("I am label!"),
+	new Label("I am label!"), //popElement() does not work with label
 	new Slider("Select count", 0.0, 100.0, 1.0, 50.0),
 	new StepSlider("Select product", ["beer", "cheese", "cola"]),
 	new Toggle("Creative", $sender->isCreative())
@@ -37,23 +37,23 @@ EasyForms::sendForm($sender, new class("Enter data", [
 	public function onSubmit(Player $player, $response) : void{
 		parent::onSubmit($player, $response);
 		/** @var Dropdown $dropdown */
-		$dropdown = $this->elements[0];
+		$dropdown = $this->popElement();
 		$player->sendMessage("You selected: {$dropdown->getSelectedOption()}");
 
 		/** @var Input $input */
-		$input = $this->elements[1];
+		$input = $this->popElement();
 		$player->sendMessage("Your name is {$input->getValue()}");
 
 		/** @var Slider $slider */
-		$slider = $this->elements[3];
+		$slider = $this->popElement();
 		$player->sendMessage("Count: {$slider->getValue()}");
 
 		/** @var StepSlider $stepSlider */
-		$stepSlider = $this->elements[4];
+		$stepSlider = $this->popElement();
 		$player->sendMessage("You selected: {$stepSlider->getSelectedOption()}");
 
 		/** @var Toggle $toggle */
-		$toggle = $this->elements[5];
+		$toggle = $this->popElement();
 		$player->setGamemode($toggle->getValue() ? 1 : 0);
 	}
 });
