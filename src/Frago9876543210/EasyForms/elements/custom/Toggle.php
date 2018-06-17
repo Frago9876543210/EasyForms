@@ -19,6 +19,13 @@ class Toggle extends Element{
 	/**
 	 * @return bool
 	 */
+	public function hasChanged() : bool{
+		return $this->default !== $this->value;
+	}
+
+	/**
+	 * @return bool
+	 */
 	public function getDefault() : bool{
 		return $this->default;
 	}
