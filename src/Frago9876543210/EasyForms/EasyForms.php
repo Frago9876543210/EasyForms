@@ -27,7 +27,7 @@ class EasyForms extends PluginBase implements Listener{
 	/** @var Map */
 	private static $forms;
 
-	protected function onEnable() : void{
+	public function onEnable() : void{
 		self::$forms = new Map;
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 	}
