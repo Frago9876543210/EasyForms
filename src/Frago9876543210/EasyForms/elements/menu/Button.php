@@ -11,14 +11,18 @@ class Button extends Element{
 	/** @var null|string */
 	protected $image;
 
+	/** @var string */
+	protected $imageType;
+
 	/**
 	 * Button constructor.
 	 * @param string      $text
 	 * @param null|string $image
 	 */
-	public function __construct(string $text, ?string $image = null){
+	public function __construct(string $text, ?string $image = null, bool $isUrl = true){
 		parent::__construct($text);
 		$this->image = $image;
+		$this->imageType = $isUrl ? "url" : "path";
 	}
 
 	/**
@@ -35,7 +39,7 @@ class Button extends Element{
 		$data = ["text" => $this->text];
 		if($this->hasImage()){
 			$data["image"] = [
-				"type" => "url",
+				"type" => $this->imageType,
 				"data" => $this->image
 			];
 		}
@@ -47,5 +51,12 @@ class Button extends Element{
 	 */
 	public function hasImage() : bool{
 		return $this->image !== null;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getImageType() : string{
+		return $this->imageType;
 	}
 }
