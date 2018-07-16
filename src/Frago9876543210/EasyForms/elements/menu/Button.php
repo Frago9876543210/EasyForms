@@ -18,6 +18,7 @@ class Button extends Element{
 	 * Button constructor.
 	 * @param string      $text
 	 * @param null|string $image
+	 * @param bool $isUrl
 	 */
 	public function __construct(string $text, ?string $image = null, bool $isUrl = true){
 		parent::__construct($text);
