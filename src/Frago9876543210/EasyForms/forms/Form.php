@@ -8,9 +8,9 @@ namespace Frago9876543210\EasyForms\forms;
 use pocketmine\Player;
 
 abstract class Form implements \pocketmine\form\Form{
-	public const TYPE_MODAL = "modal";
-	public const TYPE_MENU = "form";
-	public const TYPE_CUSTOM_FORM = "custom_form";
+	protected const TYPE_MODAL = "modal";
+	protected const TYPE_MENU = "form";
+	protected const TYPE_CUSTOM_FORM = "custom_form";
 
 	/** @var string */
 	protected $title;
