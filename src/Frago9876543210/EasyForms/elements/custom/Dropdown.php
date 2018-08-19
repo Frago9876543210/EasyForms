@@ -36,10 +36,7 @@ class Dropdown extends Element{
 	 * @return string
 	 */
 	public function getSelectedOption() : ?string{
-		if($this->value !== null && isset($this->options[$this->value])){
-			return $this->options[$this->value];
-		}
-		return null;
+		return $this->options[$this->value] ?? null;
 	}
 
 	/**

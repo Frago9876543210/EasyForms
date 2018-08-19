@@ -1,9 +1,16 @@
 # EasyForms
 Plugin for pmmp that allow you create GUI in a few clicks.
 ### Code samples
+
+```diff
+- EasyForms::sendForm($player, $form);
+//must be replaced to
++ $player->sendForm($form);
+```
+
 #### ModalForm
 ```php
-EasyForms::sendForm($sender, new class("A small question", "Our server is cool?") extends ModalForm{
+$sender->sendForm(new class("A small question", "Our server is cool?") extends ModalForm{
 	public function onSubmit(Player $player, $response) : void{
 		$player->sendMessage($response ? "Thank you" : "We will try to become better");
 	}
@@ -12,7 +19,7 @@ EasyForms::sendForm($sender, new class("A small question", "Our server is cool?"
 ![modal](https://i.imgur.com/eI2xaBL.png)
 #### MenuForm
 ```php
-EasyForms::sendForm($sender, new class("Select server", "Choose server", [
+$sender->sendForm(new class("Select server", "Choose server", [
 	new Button("SkyWars #1", "https://d1u5p3l4wpay3k.cloudfront.net/minecraft_gamepedia/1/19/Melon.png")
 ]) extends MenuForm{
 	public function onSubmit(Player $player, $response) : void{
@@ -24,7 +31,7 @@ EasyForms::sendForm($sender, new class("Select server", "Choose server", [
 ![menu](https://i.imgur.com/QewDqkc.png)
 #### CustomForm
 ```php
-EasyForms::sendForm($sender, new class("Enter data", [
+$sender->sendForm(new class("Enter data", [
 	new Dropdown("Select product", ["beer", "cheese", "cola"]),
 	new Input("Enter your name", "Bob"),
 	new Label("I am label!"), //popElement() does not work with label
@@ -62,7 +69,7 @@ EasyForms::sendForm($sender, new class("Enter data", [
 ```php
 public function onServerSettingsRequest(ServerSettingsRequestEvent $e) : void{
 	$player = $e->getPlayer();
-	EasyForms::sendForm($player, new class("Server settings", [
+	$e->setForm(new class("Server settings", [
 		new Label("Some text"),
 		new Toggle("Fly", $player->isFlying())
 	], "http://icons.iconarchive.com/icons/double-j-design/diagram-free/128/settings-icon.png") extends ServerSettingsForm{
