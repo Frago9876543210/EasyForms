@@ -20,7 +20,7 @@ class MenuForm extends Form{
 	 * @param string $text
 	 * @param Button[]    $buttons
 	 */
-	public function __construct(string $title, string $text, array $buttons){
+	public function __construct(string $title, string $text, array $buttons = []){
 		parent::__construct($title);
 		$this->text = $text;
 		$this->buttons = $buttons;
