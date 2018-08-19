@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\forms;
 
 
-use pocketmine\form\Form as PMForm;
 use pocketmine\Player;
 
-abstract class Form implements PMForm{
+abstract class Form implements \pocketmine\form\Form{
 	public const TYPE_MODAL = "modal";
 	public const TYPE_MENU = "form";
 	public const TYPE_CUSTOM_FORM = "custom_form";
@@ -24,7 +23,7 @@ abstract class Form implements PMForm{
 		$this->title = $title;
 	}
 
-	public function handleResponse(Player $player, $data) : ?PMForm{
+	public function handleResponse(Player $player, $data) : void{
 		try{
 			if($data === null){
 				$this->onClose($player);
@@ -38,7 +37,6 @@ abstract class Form implements PMForm{
 		}catch(\Throwable $e){
 			$player->getServer()->getLogger()->logException($e);
 		}
-		return null; //TODO: next form
 	}
 
 	/**
