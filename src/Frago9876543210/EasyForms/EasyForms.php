@@ -20,16 +20,6 @@ class EasyForms extends PluginBase implements Listener{
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 	}
 
-	/**
-	 * @deprecated
-	 * @param Player    $player
-	 * @param Form      $form
-	 * @param bool|null $settings
-	 */
-	public static function sendForm(Player $player, Form $form, ?bool $settings = null) : void{
-		throw new \RuntimeException(__METHOD__ . " is deprecated and will be removed in 1.0.6");
-	}
-
 	private function sendSetting(Player $player, Form $form) : void{
 		$reflection = new \ReflectionObject($player);
 

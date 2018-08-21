@@ -60,7 +60,7 @@ class CustomForm extends Form{
 	/**
 	 * @return string
 	 */
-	public function getType() : string{
+	final public function getType() : string{
 		return self::TYPE_CUSTOM_FORM;
 	}
 
