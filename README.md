@@ -1,6 +1,7 @@
 # EasyForms
 Plugin for pmmp that allow you create GUI in a few clicks.
-### Code samples
+
+### Migrating to 1.0.6
 
 ```diff
 - EasyForms::sendForm($player, $form);
@@ -8,8 +9,8 @@ Plugin for pmmp that allow you create GUI in a few clicks.
 + $player->sendForm($form);
 //and servers settings must be replaced to
 + $e->setForm($form);
-
 ```
+### Code samples
 
 #### ModalForm
 ```php
