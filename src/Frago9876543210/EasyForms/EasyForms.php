@@ -32,7 +32,7 @@ class EasyForms extends PluginBase implements Listener{
 
 		$idProperty->setValue($player, $id);
 
-		$pk = new ServerSettingsResponsePacket;
+		$pk = new ServerSettingsResponsePacket();
 		$pk->formId = $id;
 		$pk->formData = json_encode($form);
 		if($player->sendDataPacket($pk)){
@@ -49,7 +49,8 @@ class EasyForms extends PluginBase implements Listener{
 	public function onDataPacketReceive(DataPacketReceiveEvent $e) : void{
 		$pk = $e->getPacket();
 		if($pk instanceof ServerSettingsRequestPacket){
-			$this->getServer()->getPluginManager()->callEvent($ev = new ServerSettingsRequestEvent($this, $player = $e->getPlayer()));
+			/** @noinspection PhpUnhandledExceptionInspection */
+			($ev = new ServerSettingsRequestEvent($player = $e->getPlayer()))->call();
 			if(($form = $ev->getForm()) !== null){
 				$this->sendSetting($player, $form);
 			}

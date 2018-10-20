@@ -6,31 +6,19 @@ namespace Frago9876543210\EasyForms;
 
 
 use Frago9876543210\EasyForms\forms\ServerSettingsForm;
-use pocketmine\event\plugin\PluginEvent;
+use pocketmine\event\player\PlayerEvent;
 use pocketmine\Player;
-use pocketmine\plugin\Plugin;
 
-class ServerSettingsRequestEvent extends PluginEvent{
-	/** @var Player */
-	private $player;
+class ServerSettingsRequestEvent extends PlayerEvent{
 	/** @var ServerSettingsForm|null */
 	private $form;
 
 	/**
 	 * ServerSettingsRequestPacket constructor.
-	 * @param Plugin $plugin
 	 * @param Player $player
 	 */
-	public function __construct(Plugin $plugin, Player $player){
-		parent::__construct($plugin);
+	public function __construct(Player $player){
 		$this->player = $player;
-	}
-
-	/**
-	 * @return Player
-	 */
-	public function getPlayer() : Player{
-		return $this->player;
 	}
 
 	/**
