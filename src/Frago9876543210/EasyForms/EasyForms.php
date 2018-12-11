@@ -50,7 +50,7 @@ class EasyForms extends PluginBase implements Listener{
 		$pk = $e->getPacket();
 		if($pk instanceof ServerSettingsRequestPacket){
 			$ev = new ServerSettingsRequestEvent($player = $e->getPlayer());
-			$this->getServer()->getApiVersion(){0} === "3" ? $this->getServer()->getPluginManager()->callEvent($ev) : $ev->call();
+			($server = $this->getServer())->getApiVersion(){0} === "3" ? $server->getPluginManager()->callEvent($ev) : $ev->call();
 			if(($form = $ev->getForm()) !== null){
 				$this->sendSetting($player, $form);
 			}
