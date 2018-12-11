@@ -49,8 +49,8 @@ class EasyForms extends PluginBase implements Listener{
 	public function onDataPacketReceive(DataPacketReceiveEvent $e) : void{
 		$pk = $e->getPacket();
 		if($pk instanceof ServerSettingsRequestPacket){
-			/** @noinspection PhpUnhandledExceptionInspection */
-			($ev = new ServerSettingsRequestEvent($player = $e->getPlayer()))->call();
+			$ev = new ServerSettingsRequestEvent($player = $e->getPlayer());
+			$this->getServer()->getApiVersion(){0} === "3" ? $this->getServer()->getPluginManager()->callEvent($ev) : $ev->call();
 			if(($form = $ev->getForm()) !== null){
 				$this->sendSetting($player, $form);
 			}
