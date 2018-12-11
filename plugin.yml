@@ -1,5 +1,5 @@
 name: EasyForms
 main: Frago9876543210\EasyForms\EasyForms
-version: 1.0.6
+version: 1.0.7
 api: [3.3.0, 4.0.0]
 extensions: ds
