@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Frago9876543210\EasyForms\elements\menu;
+namespace Frago9876543210\EasyForms\elements;
 
-
-use Frago9876543210\EasyForms\elements\Element;
 
 class Button extends Element{
 	public const TYPE_URL = "url";

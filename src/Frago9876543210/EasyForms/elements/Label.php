@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Frago9876543210\EasyForms\elements\custom;
+namespace Frago9876543210\EasyForms\elements;
 
-
-use Frago9876543210\EasyForms\elements\Element;
 
 class Label extends Element{
 

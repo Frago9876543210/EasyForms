@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Frago9876543210\EasyForms\elements\custom;
+namespace Frago9876543210\EasyForms\elements;
 
 
 class StepSlider extends Dropdown{
