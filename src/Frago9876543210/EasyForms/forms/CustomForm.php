@@ -6,12 +6,7 @@ namespace Frago9876543210\EasyForms\forms;
 
 
 use Ds\Queue;
-use Frago9876543210\EasyForms\elements\custom\Dropdown;
-use Frago9876543210\EasyForms\elements\custom\Input;
-use Frago9876543210\EasyForms\elements\custom\Label;
-use Frago9876543210\EasyForms\elements\custom\Slider;
-use Frago9876543210\EasyForms\elements\custom\Toggle;
-use Frago9876543210\EasyForms\elements\Element;
+use Frago9876543210\EasyForms\elements\{Dropdown, Input, Slider, Toggle, Element};
 use pocketmine\Player;
 
 class CustomForm extends Form{
