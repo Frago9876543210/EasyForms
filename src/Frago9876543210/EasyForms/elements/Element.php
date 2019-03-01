@@ -22,7 +22,7 @@ abstract class Element implements \JsonSerializable{
 	}
 
 	/**
-	 * @return mixed|null
+	 * @return int|null
 	 */
 	public function getValue(){
 		return $this->value;
