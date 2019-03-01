@@ -28,13 +28,15 @@ class MenuForm extends Form{
 	 * @param \Closure      $onSubmit
 	 * @param \Closure|null $onClose
 	 */
-	public function __construct(string $title, string $text, array $buttons, \Closure $onSubmit, ?\Closure $onClose = null){
+	public function __construct(string $title, string $text, array $buttons = [], ?\Closure $onSubmit = null, ?\Closure $onClose = null){
 		parent::__construct($title);
 		$this->text = $text;
 		$this->buttons = $buttons;
-		Utils::validateCallableSignature(function(Player $player, Button $selected) : void{
-		}, $onSubmit);
-		$this->onSubmit = $onSubmit;
+		if($onSubmit !== null){
+			Utils::validateCallableSignature(function(Player $player, Button $selected) : void{
+			}, $onSubmit);
+			$this->onSubmit = $onSubmit;
+		}
 		if($onClose !== null){
 			Utils::validateCallableSignature(function(Player $player) : void{
 			}, $onClose);
@@ -68,9 +70,11 @@ class MenuForm extends Form{
 			if(!isset($this->buttons[$data])){
 				throw new FormValidationException("Button with index $data does not exist");
 			}
-			$button = $this->buttons[$data];
-			$button->setValue($data);
-			($this->onSubmit)($player, $button);
+			if($this->onSubmit !== null){
+				$button = $this->buttons[$data];
+				$button->setValue($data);
+				($this->onSubmit)($player, $button);
+			}
 		}else{
 			throw new FormValidationException("Expected int or null, got " . gettype($data));
 		}
