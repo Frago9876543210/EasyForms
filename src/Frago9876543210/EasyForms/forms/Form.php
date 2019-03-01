@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\forms;
 
 
-use pocketmine\Player;
-
 abstract class Form implements \pocketmine\form\Form{
 	protected const TYPE_MODAL = "modal";
 	protected const TYPE_MENU = "form";
@@ -21,35 +19,6 @@ abstract class Form implements \pocketmine\form\Form{
 	 */
 	public function __construct(string $title){
 		$this->title = $title;
-	}
-
-	public function handleResponse(Player $player, $data) : void{
-		try{
-			if($data === null){
-				$this->onClose($player);
-			}elseif(
-				($this instanceof MenuForm && is_int($data)) ||
-				($this instanceof ModalForm && is_bool($data)) ||
-				($this instanceof CustomForm && is_array($data))
-			){
-				$this->onSubmit($player, $data);
-			}
-		}catch(\Throwable $e){
-			$player->getServer()->getLogger()->logException($e);
-		}
-	}
-
-	/**
-	 * @param Player $player
-	 */
-	public function onClose(Player $player) : void{
-	}
-
-	/**
-	 * @param Player $player
-	 * @param mixed  $response
-	 */
-	public function onSubmit(Player $player, $response) : void{
 	}
 
 	/**

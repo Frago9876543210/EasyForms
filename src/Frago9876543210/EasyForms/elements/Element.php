@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\elements;
 
 
+use pocketmine\form\FormValidationException;
+
 abstract class Element implements \JsonSerializable{
 	/** @var string */
 	protected $text;
@@ -60,4 +62,13 @@ abstract class Element implements \JsonSerializable{
 	 * @return array
 	 */
 	abstract public function serializeElementData() : array;
+
+	/**
+	 * @param $value
+	 */
+	public function validate($value) : void{
+		if(!is_int($value)){
+			throw new FormValidationException("Expected int, got " . gettype($value));
+		}
+	}
 }

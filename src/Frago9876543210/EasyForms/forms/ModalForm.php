@@ -5,26 +5,36 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\forms;
 
 
+use pocketmine\form\FormValidationException;
+use pocketmine\Player;
+use pocketmine\utils\Utils;
+
 class ModalForm extends Form{
 	/** @var string */
 	protected $text;
 	/** @var string */
-	protected $yesButton;
+	private $yesButton;
 	/** @var string */
-	protected $noButton;
+	private $noButton;
+	/** @var \Closure */
+	private $onSubmit;
 
 	/**
 	 * ModalForm constructor.
-	 * @param string $title
-	 * @param string $text
-	 * @param string $yesButton
-	 * @param string $noButton
+	 * @param string   $title
+	 * @param string   $text
+	 * @param \Closure $onSubmit
+	 * @param string   $yesButton
+	 * @param string   $noButton
 	 */
-	public function __construct(string $title, string $text, string $yesButton = "gui.yes", string $noButton = "gui.no"){
+	public function __construct(string $title, string $text, \Closure $onSubmit, $yesButton = "gui.yes", string $noButton = "gui.no"){
 		parent::__construct($title);
 		$this->text = $text;
 		$this->yesButton = $yesButton;
 		$this->noButton = $noButton;
+		Utils::validateCallableSignature(function(Player $player, bool $response) : void{
+		}, $onSubmit);
+		$this->onSubmit = $onSubmit;
 	}
 
 	/**
@@ -57,5 +67,12 @@ class ModalForm extends Form{
 			"button1" => $this->yesButton,
 			"button2" => $this->noButton
 		];
+	}
+
+	final public function handleResponse(Player $player, $data) : void{
+		if(!is_bool($data)){
+			throw new FormValidationException("Expected bool, got " . gettype($data));
+		}
+		($this->onSubmit)($player, $data);
 	}
 }

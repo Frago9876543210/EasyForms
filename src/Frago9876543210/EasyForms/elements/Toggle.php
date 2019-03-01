@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\elements;
 
 
+use pocketmine\form\FormValidationException;
+
 class Toggle extends Element{
 	/** @var bool */
 	protected $default;
@@ -42,5 +44,14 @@ class Toggle extends Element{
 		return [
 			"default" => $this->default
 		];
+	}
+
+	/**
+	 * @param $value
+	 */
+	public function validate($value) : void{
+		if(!is_bool($value)){
+			throw new FormValidationException("Expected bool, got " . gettype($value));
+		}
 	}
 }

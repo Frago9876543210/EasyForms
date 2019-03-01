@@ -5,51 +5,39 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\forms;
 
 
-use Ds\Queue;
-use Frago9876543210\EasyForms\elements\{Dropdown, Input, Slider, Toggle, Element};
+use Frago9876543210\EasyForms\elements\Element;
+use pocketmine\form\FormValidationException;
 use pocketmine\Player;
+use pocketmine\utils\Utils;
 
 class CustomForm extends Form{
 	/** @var Element[] */
 	protected $elements;
-	/** @var Queue */
-	private $queue;
+	/** @var \Closure */
+	private $onSubmit;
+	/** @var \Closure|null */
+	private $onClose;
 
 	/**
 	 * CustomForm constructor.
-	 * @param string    $title
-	 * @param Element[] $elements
+	 * @param string        $title
+	 * @param Element[]     $elements
+	 * @param \Closure      $onSubmit
+	 * @param \Closure|null $onClose
 	 */
-	public function __construct(string $title, array $elements){
+	public function __construct(string $title, array $elements, \Closure $onSubmit, ?\Closure $onClose = null){
 		parent::__construct($title);
 		$this->elements = $elements;
-		$this->queue = new Queue;
-	}
-
-	/**
-	 * @param Player $player
-	 * @param mixed  $response
-	 */
-	public function onSubmit(Player $player, $response) : void{
-		foreach($this->elements as $index => $element){
-			$value = $response[$index];
-			if(
-				($element instanceof Dropdown && is_int($value)) ||
-				($element instanceof Input && is_string($value)) ||
-				($element instanceof Slider && (is_float($value) || is_int($value)) && ($value >= $element->getMin() || $value <= $element->getMax())) ||
-				($element instanceof Toggle && is_bool($value))
-			){
-				$this->queue->push($element);
-				$element->setValue($value);
-			}
+		$this->onSubmit = $onSubmit;
+		$this->onClose = $onClose;
+		Utils::validateCallableSignature(function(Player $player, CustomFormResponse $response) : void{
+		}, $onSubmit);
+		$this->onSubmit = $onSubmit;
+		if($onClose !== null){
+			Utils::validateCallableSignature(function(Player $player) : void{
+			}, $onClose);
+			$this->onClose = $onClose;
 		}
-	}
-
-	/**
-	 * @return Element
-	 */
-	public function popElement() : Element{
-		return $this->queue->pop();
 	}
 
 	/**
@@ -64,5 +52,25 @@ class CustomForm extends Form{
 	 */
 	protected function serializeFormData() : array{
 		return ["content" => $this->elements];
+	}
+
+	final public function handleResponse(Player $player, $data) : void{
+		if($data === null){
+			if($this->onClose !== null){
+				($this->onClose)($player);
+			}
+		}elseif(is_array($data)){
+			foreach($data as $index => $value){
+				if(!isset($this->elements[$index])){
+					throw new FormValidationException("Element at index $index does not exist");
+				}
+				$element = $this->elements[$index];
+				$element->validate($value);
+				$element->setValue($value);
+			}
+			($this->onSubmit)($player, new CustomFormResponse($this->elements));
+		}else{
+			throw new FormValidationException("Expected array or null, got " . gettype($data));
+		}
 	}
 }

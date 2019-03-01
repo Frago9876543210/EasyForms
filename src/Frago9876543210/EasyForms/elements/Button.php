@@ -6,24 +6,19 @@ namespace Frago9876543210\EasyForms\elements;
 
 
 class Button extends Element{
-	public const TYPE_URL = "url";
-	public const TYPE_PATH = "path";
-
-	/** @var null|string */
+	/** @var Image|null */
 	protected $image;
 	/** @var string */
 	protected $type;
 
 	/**
 	 * Button constructor.
-	 * @param string      $text
-	 * @param null|string $image
-	 * @param string      $type
+	 * @param string     $text
+	 * @param Image|null $image
 	 */
-	public function __construct(string $text, ?string $image = null, string $type = self::TYPE_URL){
+	public function __construct(string $text, ?Image $image = null){
 		parent::__construct($text);
 		$this->image = $image;
-		$this->type = $type;
 	}
 
 	/**
@@ -34,23 +29,20 @@ class Button extends Element{
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function hasImage() : bool{
+		return $this->image !== null;
+	}
+
+	/**
 	 * @return array
 	 */
 	public function serializeElementData() : array{
 		$data = ["text" => $this->text];
 		if($this->hasImage()){
-			$data["image"] = [
-				"type" => $this->type,
-				"data" => $this->image
-			];
+			$data["image"] = $this->image;
 		}
 		return $data;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function hasImage() : bool{
-		return $this->image !== null;
 	}
 }

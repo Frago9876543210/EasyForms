@@ -5,26 +5,30 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\forms;
 
 
+use Frago9876543210\EasyForms\elements\Image;
+
 class ServerSettingsForm extends CustomForm{
-	/** @var null|string */
-	protected $icon;
+	/** @var Image|null */
+	protected $image;
 
 	/**
 	 * ServerSettingsForm constructor.
-	 * @param string      $title
-	 * @param array       $elements
-	 * @param null|string $icon
+	 * @param string        $title
+	 * @param               $elements
+	 * @param Image|null    $image
+	 * @param \Closure      $onSubmit
+	 * @param \Closure|null $onClose
 	 */
-	public function __construct(string $title, $elements, ?string $icon = null){
-		parent::__construct($title, $elements);
-		$this->icon = $icon;
+	public function __construct(string $title, $elements, ?Image $image, \Closure $onSubmit, ?\Closure $onClose = null){
+		parent::__construct($title, $elements, $onSubmit, $onClose);
+		$this->image = $image;
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function hasIcon() : bool{
-		return $this->icon !== null;
+	public function hasImage() : bool{
+		return $this->image !== null;
 	}
 
 	/**
@@ -32,11 +36,8 @@ class ServerSettingsForm extends CustomForm{
 	 */
 	public function serializeFormData() : array{
 		$data = parent::serializeFormData();
-		if($this->hasIcon()){
-			$data["icon"] = [
-				"type" => "url",
-				"data" => $this->icon
-			];
+		if($this->hasImage()){
+			$data["icon"] = $this->image;
 		}
 		return $data;
 	}

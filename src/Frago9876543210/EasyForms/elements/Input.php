@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\elements;
 
 
+use pocketmine\form\FormValidationException;
+
 class Input extends Element{
 	/** @var string */
 	protected $placeholder;
@@ -52,5 +54,14 @@ class Input extends Element{
 			"placeholder" => $this->placeholder,
 			"default" => $this->default
 		];
+	}
+
+	/**
+	 * @param $value
+	 */
+	public function validate($value) : void{
+		if(!is_string($value)){
+			throw new FormValidationException("Expected string, got " . gettype($value));
+		}
 	}
 }

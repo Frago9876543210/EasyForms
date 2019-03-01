@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\elements;
 
 
+use pocketmine\form\FormValidationException;
+
 class Slider extends Element{
 	/** @var float */
 	protected $min;
@@ -89,5 +91,11 @@ class Slider extends Element{
 			"default" => $this->default,
 			"step" => $this->step
 		];
+	}
+
+	public function validate($value) : void{
+		if(!is_int($value) && !is_float($value)){
+			throw new FormValidationException("Expected int or float, got " . gettype($value));
+		}
 	}
 }
