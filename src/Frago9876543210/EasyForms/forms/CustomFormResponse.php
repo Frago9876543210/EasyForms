@@ -22,10 +22,11 @@ class CustomFormResponse{
 	}
 
 	/**
+	 * @internal
 	 * @param string $expected
 	 * @return Element|mixed
 	 */
-	private function tryGet(string $expected = Element::class){ //why PHP still hasn't templates???
+	public function tryGet(string $expected = Element::class){ //why PHP still hasn't templates???
 		if(($element = array_shift($this->elements)) instanceof Label){
 			return $this->tryGet($expected); //remove useless element
 		}elseif($element === null || !($element instanceof $expected)){
