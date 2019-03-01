@@ -26,6 +26,13 @@ class Input extends Element{
 	}
 
 	/**
+	 * @return string|null
+	 */
+	public function getValue() : ?string{
+		return parent::getValue();
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getPlaceholder() : string{

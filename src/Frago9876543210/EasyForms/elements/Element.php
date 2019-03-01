@@ -29,7 +29,7 @@ abstract class Element implements \JsonSerializable{
 	}
 
 	/**
-	 * @param null|mixed $value
+	 * @param null|int $value
 	 */
 	public function setValue($value){
 		$this->value = $value;

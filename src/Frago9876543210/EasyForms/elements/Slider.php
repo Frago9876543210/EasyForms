@@ -47,6 +47,13 @@ class Slider extends Element{
 	}
 
 	/**
+	 * @return float|int|null
+	 */
+	public function getValue(){
+		return parent::getValue();
+	}
+
+	/**
 	 * @return float
 	 */
 	public function getMin() : float{
