@@ -6,6 +6,7 @@ namespace Frago9876543210\EasyForms\elements;
 
 
 use pocketmine\form\FormValidationException;
+use function is_int;
 
 abstract class Element implements \JsonSerializable{
 	/** @var string */
@@ -14,7 +15,6 @@ abstract class Element implements \JsonSerializable{
 	protected $value;
 
 	/**
-	 * Element constructor.
 	 * @param string $text
 	 */
 	public function __construct(string $text){
@@ -54,7 +54,7 @@ abstract class Element implements \JsonSerializable{
 	}
 
 	/**
-	 * @return null|string
+	 * @return string|null
 	 */
 	abstract public function getType() : ?string;
 

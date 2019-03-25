@@ -16,7 +16,6 @@ class Image implements \JsonSerializable{
 	private $data;
 
 	/**
-	 * Image constructor.
 	 * @param string $data
 	 * @param string $type
 	 */

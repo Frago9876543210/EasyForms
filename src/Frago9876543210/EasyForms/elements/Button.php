@@ -12,7 +12,6 @@ class Button extends Element{
 	protected $type;
 
 	/**
-	 * Button constructor.
 	 * @param string     $text
 	 * @param Image|null $image
 	 */
@@ -22,7 +21,7 @@ class Button extends Element{
 	}
 
 	/**
-	 * @return null|string
+	 * @return string|null
 	 */
 	public function getType() : ?string{
 		return null;

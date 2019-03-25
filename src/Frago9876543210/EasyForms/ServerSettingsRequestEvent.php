@@ -14,7 +14,6 @@ class ServerSettingsRequestEvent extends PlayerEvent{
 	private $form;
 
 	/**
-	 * ServerSettingsRequestPacket constructor.
 	 * @param Player $player
 	 */
 	public function __construct(Player $player){

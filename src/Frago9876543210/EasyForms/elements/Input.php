@@ -6,6 +6,7 @@ namespace Frago9876543210\EasyForms\elements;
 
 
 use pocketmine\form\FormValidationException;
+use function is_string;
 
 class Input extends Element{
 	/** @var string */
@@ -14,7 +15,6 @@ class Input extends Element{
 	protected $default;
 
 	/**
-	 * Input constructor.
 	 * @param string $text
 	 * @param string $placeholder
 	 * @param string $default
@@ -47,9 +47,9 @@ class Input extends Element{
 	}
 
 	/**
-	 * @return null|string
+	 * @return string
 	 */
-	public function getType() : ?string{
+	public function getType() : string{
 		return "input";
 	}
 

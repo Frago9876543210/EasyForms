@@ -12,7 +12,6 @@ class Dropdown extends Element{
 	protected $default;
 
 	/**
-	 * Dropdown constructor.
 	 * @param string   $text
 	 * @param string[] $options
 	 * @param int      $default
@@ -31,7 +30,7 @@ class Dropdown extends Element{
 	}
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
 	public function getSelectedOption() : ?string{
 		return $this->options[$this->value] ?? null;
@@ -45,9 +44,9 @@ class Dropdown extends Element{
 	}
 
 	/**
-	 * @return null|string
+	 * @return string
 	 */
-	public function getType() : ?string{
+	public function getType() : string{
 		return "dropdown";
 	}
 

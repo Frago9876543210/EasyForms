@@ -6,12 +6,11 @@ namespace Frago9876543210\EasyForms;
 
 
 use Frago9876543210\EasyForms\forms\Form;
-use pocketmine\event\Listener;
-use pocketmine\event\server\DataPacketReceiveEvent;
-use pocketmine\network\mcpe\protocol\ServerSettingsRequestPacket;
-use pocketmine\network\mcpe\protocol\ServerSettingsResponsePacket;
-use pocketmine\Player;
-use pocketmine\plugin\PluginBase;
+use pocketmine\event\{Listener, server\DataPacketReceiveEvent};
+use pocketmine\network\mcpe\protocol\{ServerSettingsRequestPacket, ServerSettingsResponsePacket};
+use pocketmine\{Player, plugin\PluginBase};
+use function json_encode;
+use const pocketmine\IS_DEVELOPMENT_BUILD;
 
 class EasyForms extends PluginBase implements Listener{
 	public const SERVER_SETTINGS_ID = 4294967295;
@@ -48,11 +47,11 @@ class EasyForms extends PluginBase implements Listener{
 
 	public function onDataPacketReceive(DataPacketReceiveEvent $e) : void{
 		$server = $this->getServer();
-		$notMaster = $server->getApiVersion(){0} === "3";
+		$release = !IS_DEVELOPMENT_BUILD;
 		$pk = $e->getPacket();
 		if($pk instanceof ServerSettingsRequestPacket){
-			$ev = new ServerSettingsRequestEvent($player = $notMaster ? $e->getPlayer() : $e->getOrigin()->getPlayer());
-			$notMaster ? $server->getPluginManager()->callEvent($ev) : $ev->call();
+			$ev = new ServerSettingsRequestEvent($player = $release ? $e->getPlayer() : $e->getOrigin()->getPlayer());
+			$release ? $server->getPluginManager()->callEvent($ev) : $ev->call();
 			if(($form = $ev->getForm()) !== null){
 				$this->sendSetting($player, $form);
 			}

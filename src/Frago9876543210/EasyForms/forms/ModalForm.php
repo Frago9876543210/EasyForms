@@ -8,6 +8,8 @@ namespace Frago9876543210\EasyForms\forms;
 use pocketmine\form\FormValidationException;
 use pocketmine\Player;
 use pocketmine\utils\Utils;
+use function is_bool;
+use function gettype;
 
 class ModalForm extends Form{
 	/** @var string */
@@ -20,7 +22,6 @@ class ModalForm extends Form{
 	private $onSubmit;
 
 	/**
-	 * ModalForm constructor.
 	 * @param string   $title
 	 * @param string   $text
 	 * @param \Closure $onSubmit
@@ -32,8 +33,7 @@ class ModalForm extends Form{
 		$this->text = $text;
 		$this->yesButton = $yesButton;
 		$this->noButton = $noButton;
-		Utils::validateCallableSignature(function(Player $player, bool $response) : void{
-		}, $onSubmit);
+		Utils::validateCallableSignature(function(Player $player, bool $response) : void{}, $onSubmit);
 		$this->onSubmit = $onSubmit;
 	}
 

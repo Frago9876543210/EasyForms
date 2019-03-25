@@ -12,7 +12,6 @@ class ServerSettingsForm extends CustomForm{
 	protected $image;
 
 	/**
-	 * ServerSettingsForm constructor.
 	 * @param string        $title
 	 * @param               $elements
 	 * @param Image|null    $image

@@ -6,6 +6,8 @@ namespace Frago9876543210\EasyForms\elements;
 
 
 use pocketmine\form\FormValidationException;
+use function is_int;
+use function is_float;
 
 class Slider extends Element{
 	/** @var float */
@@ -18,7 +20,6 @@ class Slider extends Element{
 	protected $default;
 
 	/**
-	 * Slider constructor.
 	 * @param string     $text
 	 * @param float      $min
 	 * @param float      $max
@@ -82,9 +83,9 @@ class Slider extends Element{
 	}
 
 	/**
-	 * @return null|string
+	 * @return string
 	 */
-	public function getType() : ?string{
+	public function getType() : string{
 		return "slider";
 	}
 

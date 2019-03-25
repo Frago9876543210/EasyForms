@@ -8,13 +8,14 @@ namespace Frago9876543210\EasyForms\forms;
 
 use Frago9876543210\EasyForms\elements\{Dropdown, Input, Label, Slider, StepSlider, Toggle, Element};
 use pocketmine\form\FormValidationException;
+use function array_shift;
+use function get_class;
 
 class CustomFormResponse{
 	/** @var Element[] */
 	private $elements;
 
 	/**
-	 * CustomFormResponse constructor.
 	 * @param Element[] $elements
 	 */
 	public function __construct(array $elements){
@@ -23,7 +24,9 @@ class CustomFormResponse{
 
 	/**
 	 * @internal
+	 *
 	 * @param string $expected
+	 *
 	 * @return Element|mixed
 	 */
 	public function tryGet(string $expected = Element::class){ //why PHP still hasn't templates???

@@ -10,9 +10,9 @@ use pocketmine\form\FormValidationException;
 class Label extends Element{
 
 	/**
-	 * @return null|string
+	 * @return string
 	 */
-	public function getType() : ?string{
+	public function getType() : string{
 		return "label";
 	}
 

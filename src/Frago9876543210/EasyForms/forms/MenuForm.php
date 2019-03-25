@@ -21,7 +21,6 @@ class MenuForm extends Form{
 	private $onClose;
 
 	/**
-	 * MenuForm constructor.
 	 * @param string        $title
 	 * @param string        $text
 	 * @param Button[]      $buttons
@@ -33,13 +32,11 @@ class MenuForm extends Form{
 		$this->text = $text;
 		$this->buttons = $buttons;
 		if($onSubmit !== null){
-			Utils::validateCallableSignature(function(Player $player, Button $selected) : void{
-			}, $onSubmit);
+			Utils::validateCallableSignature(function(Player $player, Button $selected) : void{}, $onSubmit);
 			$this->onSubmit = $onSubmit;
 		}
 		if($onClose !== null){
-			Utils::validateCallableSignature(function(Player $player) : void{
-			}, $onClose);
+			Utils::validateCallableSignature(function(Player $player) : void{}, $onClose);
 			$this->onClose = $onClose;
 		}
 	}

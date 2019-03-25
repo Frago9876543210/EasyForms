@@ -9,6 +9,8 @@ use Frago9876543210\EasyForms\elements\Element;
 use pocketmine\form\FormValidationException;
 use pocketmine\Player;
 use pocketmine\utils\Utils;
+use function is_array;
+use function gettype;
 
 class CustomForm extends Form{
 	/** @var Element[] */
@@ -19,7 +21,6 @@ class CustomForm extends Form{
 	private $onClose;
 
 	/**
-	 * CustomForm constructor.
 	 * @param string        $title
 	 * @param Element[]     $elements
 	 * @param \Closure      $onSubmit
@@ -30,12 +31,10 @@ class CustomForm extends Form{
 		$this->elements = $elements;
 		$this->onSubmit = $onSubmit;
 		$this->onClose = $onClose;
-		Utils::validateCallableSignature(function(Player $player, CustomFormResponse $response) : void{
-		}, $onSubmit);
+		Utils::validateCallableSignature(function(Player $player, CustomFormResponse $response) : void{}, $onSubmit);
 		$this->onSubmit = $onSubmit;
 		if($onClose !== null){
-			Utils::validateCallableSignature(function(Player $player) : void{
-			}, $onClose);
+			Utils::validateCallableSignature(function(Player $player) : void{}, $onClose);
 			$this->onClose = $onClose;
 		}
 	}
