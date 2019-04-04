@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms;
 
 
-use Frago9876543210\EasyForms\forms\ServerSettingsForm;
+use Frago9876543210\EasyForms\forms\CustomForm;
 use pocketmine\event\player\PlayerEvent;
 use pocketmine\Player;
 
 class ServerSettingsRequestEvent extends PlayerEvent{
-	/** @var ServerSettingsForm|null */
+	/** @var CustomForm|null */
 	private $form;
 
 	/**
@@ -21,16 +21,16 @@ class ServerSettingsRequestEvent extends PlayerEvent{
 	}
 
 	/**
-	 * @return ServerSettingsForm|null
+	 * @return CustomForm|null
 	 */
-	public function getForm() : ?ServerSettingsForm{
+	public function getForm() : ?CustomForm{
 		return $this->form;
 	}
 
 	/**
-	 * @param ServerSettingsForm|null $form
+	 * @param CustomForm|null $form
 	 */
-	public function setForm(?ServerSettingsForm $form) : void{
+	public function setForm(?CustomForm $form) : void{
 		$this->form = $form;
 	}
 }

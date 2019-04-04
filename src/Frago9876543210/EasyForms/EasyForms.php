@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms;
 
 
-use Frago9876543210\EasyForms\forms\Form;
+use Frago9876543210\EasyForms\forms\CustomForm;
 use pocketmine\event\{Listener, server\DataPacketReceiveEvent};
 use pocketmine\network\mcpe\protocol\{ServerSettingsRequestPacket, ServerSettingsResponsePacket};
 use pocketmine\{Player, plugin\PluginBase};
@@ -19,7 +19,7 @@ class EasyForms extends PluginBase implements Listener{
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
 	}
 
-	private function sendSetting(Player $player, Form $form) : void{
+	private function sendSetting(Player $player, CustomForm $form) : void{
 		$reflection = new \ReflectionObject($player);
 
 		$idProperty = $reflection->getProperty("formIdCounter");
