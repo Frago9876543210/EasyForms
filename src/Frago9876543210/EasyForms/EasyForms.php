@@ -13,7 +13,6 @@ use function json_encode;
 use const pocketmine\IS_DEVELOPMENT_BUILD;
 
 class EasyForms extends PluginBase implements Listener{
-	public const SERVER_SETTINGS_ID = 4294967295;
 
 	public function onEnable() : void{
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
@@ -24,12 +23,10 @@ class EasyForms extends PluginBase implements Listener{
 
 		$idProperty = $reflection->getProperty("formIdCounter");
 		$idProperty->setAccessible(true);
-		$idPropertyValue = $idProperty->getValue($player);
+		$id = $idProperty->getValue($player);
 
-		/** @noinspection PhpUnusedLocalVariableInspection */
-		$id = $idPropertyValue++;
-
-		$idProperty->setValue($player, $id);
+		$idProperty->setValue($player, ++$id);
+		$id--;
 
 		$pk = new ServerSettingsResponsePacket();
 		$pk->formId = $id;
