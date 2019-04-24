@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Frago9876543210\EasyForms\forms;
 
-
+use Closure;
 use Frago9876543210\EasyForms\elements\Image;
 
 class ServerSettingsForm extends CustomForm{
@@ -15,10 +15,10 @@ class ServerSettingsForm extends CustomForm{
 	 * @param string        $title
 	 * @param               $elements
 	 * @param Image|null    $image
-	 * @param \Closure      $onSubmit
-	 * @param \Closure|null $onClose
+	 * @param Closure      $onSubmit
+	 * @param Closure|null $onClose
 	 */
-	public function __construct(string $title, $elements, ?Image $image, \Closure $onSubmit, ?\Closure $onClose = null){
+	public function __construct(string $title, $elements, ?Image $image, Closure $onSubmit, ?Closure $onClose = null){
 		parent::__construct($title, $elements, $onSubmit, $onClose);
 		$this->image = $image;
 	}

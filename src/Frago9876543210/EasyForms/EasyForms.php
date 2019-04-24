@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Frago9876543210\EasyForms;
 
-
 use Frago9876543210\EasyForms\forms\CustomForm;
+use pocketmine\{Player, plugin\PluginBase};
 use pocketmine\event\{Listener, server\DataPacketReceiveEvent};
 use pocketmine\network\mcpe\protocol\{ServerSettingsRequestPacket, ServerSettingsResponsePacket};
-use pocketmine\{Player, plugin\PluginBase};
+use ReflectionObject;
 use function json_encode;
 use const pocketmine\IS_DEVELOPMENT_BUILD;
 
@@ -19,7 +19,7 @@ class EasyForms extends PluginBase implements Listener{
 	}
 
 	private function sendSetting(Player $player, CustomForm $form) : void{
-		$reflection = new \ReflectionObject($player);
+		$reflection = new ReflectionObject($player);
 
 		$idProperty = $reflection->getProperty("formIdCounter");
 		$idProperty->setAccessible(true);

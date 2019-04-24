@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace Frago9876543210\EasyForms\forms;
-
 
 use Frago9876543210\EasyForms\elements\{Dropdown, Input, Label, Slider, StepSlider, Toggle, Element};
 use pocketmine\form\FormValidationException;

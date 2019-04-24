@@ -4,30 +4,28 @@ declare(strict_types=1);
 
 namespace Frago9876543210\EasyForms\forms;
 
-
+use Closure;
 use Frago9876543210\EasyForms\elements\Button;
-use pocketmine\form\FormValidationException;
-use pocketmine\Player;
-use pocketmine\utils\Utils;
+use pocketmine\{form\FormValidationException, Player, utils\Utils};
 
 class MenuForm extends Form{
 	/** @var Button[] */
 	protected $buttons;
 	/** @var string */
 	protected $text;
-	/** @var \Closure */
+	/** @var Closure */
 	private $onSubmit;
-	/** @var \Closure|null */
+	/** @var Closure|null */
 	private $onClose;
 
 	/**
-	 * @param string        $title
-	 * @param string        $text
-	 * @param Button[]      $buttons
-	 * @param \Closure      $onSubmit
-	 * @param \Closure|null $onClose
+	 * @param string       $title
+	 * @param string       $text
+	 * @param Button[]     $buttons
+	 * @param Closure      $onSubmit
+	 * @param Closure|null $onClose
 	 */
-	public function __construct(string $title, string $text, array $buttons = [], ?\Closure $onSubmit = null, ?\Closure $onClose = null){
+	public function __construct(string $title, string $text, array $buttons = [], ?Closure $onSubmit = null, ?Closure $onClose = null){
 		parent::__construct($title);
 		$this->text = $text;
 		$this->buttons = $buttons;

@@ -4,29 +4,27 @@ declare(strict_types=1);
 
 namespace Frago9876543210\EasyForms\forms;
 
-
+use Closure;
 use Frago9876543210\EasyForms\elements\Element;
-use pocketmine\form\FormValidationException;
-use pocketmine\Player;
-use pocketmine\utils\Utils;
-use function is_array;
+use pocketmine\{form\FormValidationException, Player, utils\Utils};
 use function gettype;
+use function is_array;
 
 class CustomForm extends Form{
 	/** @var Element[] */
 	protected $elements;
-	/** @var \Closure */
+	/** @var Closure */
 	private $onSubmit;
-	/** @var \Closure|null */
+	/** @var Closure|null */
 	private $onClose;
 
 	/**
-	 * @param string        $title
-	 * @param Element[]     $elements
-	 * @param \Closure      $onSubmit
-	 * @param \Closure|null $onClose
+	 * @param string       $title
+	 * @param Element[]    $elements
+	 * @param Closure      $onSubmit
+	 * @param Closure|null $onClose
 	 */
-	public function __construct(string $title, array $elements, \Closure $onSubmit, ?\Closure $onClose = null){
+	public function __construct(string $title, array $elements, Closure $onSubmit, ?Closure $onClose = null){
 		parent::__construct($title);
 		$this->elements = $elements;
 		$this->onSubmit = $onSubmit;

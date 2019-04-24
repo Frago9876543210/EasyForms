@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Frago9876543210\EasyForms\forms;
 
-
-use pocketmine\form\FormValidationException;
-use pocketmine\Player;
-use pocketmine\utils\Utils;
+use Closure;
+use pocketmine\{form\FormValidationException, Player, utils\Utils};
 use function is_bool;
 use function gettype;
 
@@ -18,17 +16,17 @@ class ModalForm extends Form{
 	private $yesButton;
 	/** @var string */
 	private $noButton;
-	/** @var \Closure */
+	/** @var Closure */
 	private $onSubmit;
 
 	/**
 	 * @param string   $title
 	 * @param string   $text
-	 * @param \Closure $onSubmit
+	 * @param Closure $onSubmit
 	 * @param string   $yesButton
 	 * @param string   $noButton
 	 */
-	public function __construct(string $title, string $text, \Closure $onSubmit, $yesButton = "gui.yes", string $noButton = "gui.no"){
+	public function __construct(string $title, string $text, Closure $onSubmit, $yesButton = "gui.yes", string $noButton = "gui.no"){
 		parent::__construct($title);
 		$this->text = $text;
 		$this->yesButton = $yesButton;

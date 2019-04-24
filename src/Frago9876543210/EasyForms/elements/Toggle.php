@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Frago9876543210\EasyForms\elements;
 
-
 use pocketmine\form\FormValidationException;
 use function is_bool;
 
