@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Frago9876543210\EasyForms\elements;
 
+use pocketmine\form\FormValidationException;
+
 class Dropdown extends Element{
 	/** @var string[] */
 	protected $options;
@@ -29,9 +31,9 @@ class Dropdown extends Element{
 	}
 
 	/**
-	 * @return string|null
+	 * @return string
 	 */
-	public function getSelectedOption() : ?string{
+	public function getSelectedOption() : string{
 		return $this->options[$this->value] ?? null;
 	}
 
@@ -57,5 +59,12 @@ class Dropdown extends Element{
 			"options" => $this->options,
 			"default" => $this->default
 		];
+	}
+
+	public function validate($value) : void{
+		parent::validate($value);
+		if(!isset($this->options[$value])){
+			throw new FormValidationException("Option with index $value does not exist in dropdown");
+		}
 	}
 }
