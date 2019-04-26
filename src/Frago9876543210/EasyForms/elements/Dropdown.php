@@ -34,7 +34,7 @@ class Dropdown extends Element{
 	 * @return string
 	 */
 	public function getSelectedOption() : string{
-		return $this->options[$this->value] ?? null;
+		return $this->options[$this->value];
 	}
 
 	/**
