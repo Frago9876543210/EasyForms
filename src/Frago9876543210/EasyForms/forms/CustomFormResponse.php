@@ -88,4 +88,15 @@ class CustomFormResponse{
 		}
 		return $values;
 	}
+
+	/**
+	 * @return array
+	 */
+	public function getPairs() : array{
+		$pairs = [];
+		foreach($this->elements as $element){
+			$pairs[$element->getText()] = $element->getValue();
+		}
+		return $pairs;
+	}
 }
