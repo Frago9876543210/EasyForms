@@ -42,9 +42,12 @@ class MenuForm extends Form{
 
 	/**
 	 * @param Button ...$buttons
+	 *
+	 * @return $this
 	 */
-	public function append(Button ...$buttons) : void{
+	public function append(Button ...$buttons) : self{
 		$this->buttons = array_merge($this->buttons, $buttons);
+		return $this;
 	}
 
 	/**

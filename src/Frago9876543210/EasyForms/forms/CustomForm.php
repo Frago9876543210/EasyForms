@@ -40,9 +40,12 @@ class CustomForm extends Form{
 
 	/**
 	 * @param Element ...$elements
+	 *
+	 * @return $this
 	 */
-	public function append(Element ...$elements) : void{
+	public function append(Element ...$elements) : self{
 		$this->elements = array_merge($this->elements, $elements);
+		return $this;
 	}
 
 	/**
