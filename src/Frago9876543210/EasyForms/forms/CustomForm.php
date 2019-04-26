@@ -7,6 +7,7 @@ namespace Frago9876543210\EasyForms\forms;
 use Closure;
 use Frago9876543210\EasyForms\elements\Element;
 use pocketmine\{form\FormValidationException, Player, utils\Utils};
+use function array_merge;
 use function gettype;
 use function is_array;
 
@@ -35,6 +36,13 @@ class CustomForm extends Form{
 			Utils::validateCallableSignature(function(Player $player) : void{}, $onClose);
 			$this->onClose = $onClose;
 		}
+	}
+
+	/**
+	 * @param Element ...$elements
+	 */
+	public function append(Element ...$elements) : void{
+		$this->elements = array_merge($this->elements, $elements);
 	}
 
 	/**

@@ -7,6 +7,7 @@ namespace Frago9876543210\EasyForms\forms;
 use Closure;
 use Frago9876543210\EasyForms\elements\Button;
 use pocketmine\{form\FormValidationException, Player, utils\Utils};
+use function array_merge;
 
 class MenuForm extends Form{
 	/** @var Button[] */
@@ -37,6 +38,13 @@ class MenuForm extends Form{
 			Utils::validateCallableSignature(function(Player $player) : void{}, $onClose);
 			$this->onClose = $onClose;
 		}
+	}
+
+	/**
+	 * @param Button ...$buttons
+	 */
+	public function append(Button ...$buttons) : void{
+		$this->buttons = array_merge($this->buttons, $buttons);
 	}
 
 	/**
