@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Frago9876543210\EasyForms\forms;
 
-use Frago9876543210\EasyForms\elements\{Dropdown, Input, Label, Slider, StepSlider, Toggle, Element};
+use Frago9876543210\EasyForms\elements\{Dropdown, Element, Input, Label, Slider, StepSlider, Toggle};
 use pocketmine\form\FormValidationException;
 use function array_shift;
 use function get_class;
@@ -69,5 +69,23 @@ class CustomFormResponse{
 	 */
 	public function getToggle() : Toggle{
 		return $this->tryGet(Toggle::class);
+	}
+
+	/**
+	 * @return Element[]
+	 */
+	public function getElements() : array{
+		return $this->elements;
+	}
+
+	/**
+	 * @return mixed[]
+	 */
+	public function getValues() : array{
+		$values = [];
+		foreach($this->elements as $element){
+			$values[] = $element->getValue();
+		}
+		return $values;
 	}
 }
