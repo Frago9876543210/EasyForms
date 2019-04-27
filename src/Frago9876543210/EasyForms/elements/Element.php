@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Frago9876543210\EasyForms\elements;
 
+use JsonSerializable;
 use pocketmine\form\FormValidationException;
 use function is_int;
 
-abstract class Element implements \JsonSerializable{
+abstract class Element implements JsonSerializable{
 	/** @var string */
 	protected $text;
-	/** @var null|mixed */
+	/** @var mixed */
 	protected $value;
 
 	/**
@@ -21,14 +22,14 @@ abstract class Element implements \JsonSerializable{
 	}
 
 	/**
-	 * @return int|null
+	 * @return mixed
 	 */
 	public function getValue(){
 		return $this->value;
 	}
 
 	/**
-	 * @param null|int $value
+	 * @param mixed $value
 	 */
 	public function setValue($value){
 		$this->value = $value;
@@ -63,7 +64,7 @@ abstract class Element implements \JsonSerializable{
 	abstract public function serializeElementData() : array;
 
 	/**
-	 * @param $value
+	 * @param mixed $value
 	 */
 	public function validate($value) : void{
 		if(!is_int($value)){

@@ -48,7 +48,28 @@ $sender->sendForm(new CustomForm("Enter data",
 		$player->sendMessage("You selected: {$stepSlider->getSelectedOption()}");
 
 		$toggle = $response->getToggle();
-		$player->setGamemode($toggle->getValue() ? GameMode::CREATIVE : GameMode::SURVIVAL);
+		$player->setGamemode($toggle->getValue() ? GameMode::CREATIVE() : GameMode::SURVIVAL());
+	}
+));
+```
+#### CustomForm with getValues() method
+```php
+$sender->sendForm(new CustomForm("Enter data",
+	[
+		new Dropdown("Select product", ["beer", "cheese", "cola"]),
+		new Input("Enter your name", "Bob"),
+		new Label("I am label!"), //Also ignored by getValues()
+		new Slider("Select count", 0.0, 100.0, 1.0, 50.0),
+		new StepSlider("Select product", ["beer", "cheese", "cola"]),
+		new Toggle("Creative", $sender->isCreative())
+	],
+	function(Player $player, CustomFormResponse $response) : void{
+		list($product1, $username, $count, $product2, $enableCreative) = $response->getValues();
+		$player->sendMessage("You selected: $product1");
+		$player->sendMessage("Your name is $username");
+		$player->sendMessage("Count: $count");
+		$player->sendMessage("You selected: $product2");
+		$player->setGamemode($enableCreative ? GameMode::CREATIVE() : GameMode::SURVIVAL());
 	}
 ));
 ```
