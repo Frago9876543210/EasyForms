@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms;
 
 use Frago9876543210\EasyForms\forms\CustomForm;
-use pocketmine\event\player\PlayerEvent;
-use pocketmine\Player;
+use pocketmine\{event\player\PlayerEvent, Player};
 
 class ServerSettingsRequestEvent extends PlayerEvent{
 	/** @var CustomForm|null */
