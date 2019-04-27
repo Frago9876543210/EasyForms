@@ -6,8 +6,8 @@ namespace Frago9876543210\EasyForms\elements;
 
 use InvalidArgumentException;
 use pocketmine\form\FormValidationException;
-use function is_int;
 use function is_float;
+use function is_int;
 
 class Slider extends Element{
 	/** @var float */
@@ -48,7 +48,7 @@ class Slider extends Element{
 	}
 
 	/**
-	 * @return float|int|null
+	 * @return float|int
 	 */
 	public function getValue(){
 		return parent::getValue();
@@ -76,9 +76,9 @@ class Slider extends Element{
 	}
 
 	/**
-	 * @return float|null
+	 * @return float
 	 */
-	public function getDefault() : ?float{
+	public function getDefault() : float{
 		return $this->default;
 	}
 

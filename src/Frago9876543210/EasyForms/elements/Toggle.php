@@ -17,9 +17,9 @@ class Toggle extends Element{
 	}
 
 	/**
-	 * @return bool|null
+	 * @return bool
 	 */
-	public function getValue() : ?bool{
+	public function getValue() : bool{
 		return parent::getValue();
 	}
 
