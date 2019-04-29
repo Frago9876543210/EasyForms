@@ -91,18 +91,4 @@ class CustomFormResponse{
 		}
 		return $values;
 	}
-
-	/**
-	 * @return array
-	 */
-	public function getPairs() : array{
-		$pairs = [];
-		foreach($this->elements as $element){
-			if($element instanceof Label){
-				continue;
-			}
-			$pairs[$element->getText()] = $element instanceof Dropdown ? $element->getSelectedOption() : $element->getValue();
-		}
-		return $pairs;
-	}
 }
