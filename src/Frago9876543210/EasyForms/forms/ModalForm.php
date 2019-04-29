@@ -6,8 +6,8 @@ namespace Frago9876543210\EasyForms\forms;
 
 use Closure;
 use pocketmine\{form\FormValidationException, Player, utils\Utils};
-use function is_bool;
 use function gettype;
+use function is_bool;
 
 class ModalForm extends Form{
 	/** @var string */
@@ -20,11 +20,11 @@ class ModalForm extends Form{
 	private $onSubmit;
 
 	/**
-	 * @param string   $title
-	 * @param string   $text
+	 * @param string  $title
+	 * @param string  $text
 	 * @param Closure $onSubmit
-	 * @param string   $yesButton
-	 * @param string   $noButton
+	 * @param string  $yesButton
+	 * @param string  $noButton
 	 */
 	public function __construct(string $title, string $text, Closure $onSubmit, $yesButton = "gui.yes", string $noButton = "gui.no"){
 		parent::__construct($title);
@@ -33,6 +33,22 @@ class ModalForm extends Form{
 		$this->noButton = $noButton;
 		Utils::validateCallableSignature(function(Player $player, bool $response) : void{}, $onSubmit);
 		$this->onSubmit = $onSubmit;
+	}
+
+	/**
+	 * @param string  $title
+	 * @param string  $text
+	 * @param Closure $onConfirm
+	 *
+	 * @return ModalForm
+	 */
+	public static function createConfirmForm(string $title, string $text, Closure $onConfirm) : self{
+		Utils::validateCallableSignature(function(Player $player) : void{}, $onConfirm);
+		return new self($title, $text, function(Player $player, bool $response) use ($onConfirm): void{
+			if($response){
+				$onConfirm($player);
+			}
+		});
 	}
 
 	/**
