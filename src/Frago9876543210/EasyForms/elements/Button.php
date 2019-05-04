@@ -24,7 +24,7 @@ class Button extends Element{
 	 *
 	 * @return Button[]
 	 */
-	public static function createButtonsFromList(string ...$texts) : array{
+	public static function createFromList(string ...$texts) : array{
 		$buttons = [];
 		foreach($texts as $text){
 			$buttons[] = new self($text);
