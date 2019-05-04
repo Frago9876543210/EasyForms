@@ -38,6 +38,16 @@ abstract class Form implements \pocketmine\form\Form{
 	}
 
 	/**
+	 * @param string $title
+	 *
+	 * @return $this
+	 */
+	public function setTitle(string $title) : self{
+		$this->title = $title;
+		return $this;
+	}
+
+	/**
 	 * @return string
 	 */
 	abstract public function getType() : string;

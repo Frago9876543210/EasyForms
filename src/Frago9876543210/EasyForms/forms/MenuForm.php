@@ -35,6 +35,16 @@ class MenuForm extends Form{
 	}
 
 	/**
+	 * @param string $text
+	 *
+	 * @return self
+	 */
+	public function setText(string $text) : self{
+		$this->text = $text;
+		return $this;
+	}
+
+	/**
 	 * @param Button ...$buttons
 	 *
 	 * @return self
