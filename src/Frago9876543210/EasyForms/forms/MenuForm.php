@@ -30,14 +30,9 @@ class MenuForm extends Form{
 		parent::__construct($title);
 		$this->text = $text;
 		$this->buttons = $buttons;
-		if($onSubmit !== null){
-			Utils::validateCallableSignature(function(Player $player, Button $selected) : void{}, $onSubmit);
-			$this->onSubmit = $onSubmit;
-		}
-		if($onClose !== null){
-			Utils::validateCallableSignature(function(Player $player) : void{}, $onClose);
-			$this->onClose = $onClose;
-		}
+
+		$this->validateOnSubmit($onSubmit);
+		$this->validateOnClose($onClose);
 	}
 
 	/**
@@ -52,12 +47,32 @@ class MenuForm extends Form{
 
 	/**
 	 * @param Closure|null $onSubmit
+	 */
+	final private function validateOnSubmit(?Closure $onSubmit) : void{
+		if($onSubmit !== null){
+			Utils::validateCallableSignature(function(Player $player, Button $selected) : void{}, $onSubmit);
+			$this->onSubmit = $onSubmit;
+		}
+	}
+
+	/**
+	 * @param Closure|null $onSubmit
 	 *
 	 * @return self
 	 */
 	public function setOnSubmit(?Closure $onSubmit) : self{
-		$this->onSubmit = $onSubmit;
+		$this->validateOnSubmit($onSubmit);
 		return $this;
+	}
+
+	/**
+	 * @param Closure|null $onClose
+	 */
+	final private function validateOnClose(?Closure $onClose) : void{
+		if($onClose !== null){
+			Utils::validateCallableSignature(function(Player $player) : void{}, $onClose);
+			$this->onClose = $onClose;
+		}
 	}
 
 	/**
@@ -66,7 +81,7 @@ class MenuForm extends Form{
 	 * @return self
 	 */
 	public function setOnClose(?Closure $onClose) : self{
-		$this->onClose = $onClose;
+		$this->validateOnClose($onClose);
 		return $this;
 	}
 
