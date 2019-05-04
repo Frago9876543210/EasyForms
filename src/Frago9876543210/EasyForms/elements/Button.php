@@ -20,13 +20,13 @@ class Button extends Element{
 	}
 
 	/**
-	 * @param string[] $list
+	 * @param string ...$texts
 	 *
 	 * @return Button[]
 	 */
-	public static function createButtonsFromList(array $list) : array{
+	public static function createButtonsFromList(string ...$texts) : array{
 		$buttons = [];
-		foreach($list as $text){
+		foreach($texts as $text){
 			$buttons[] = new self($text);
 		}
 		return $buttons;
