@@ -14,7 +14,7 @@ class MenuForm extends Form{
 	protected $buttons;
 	/** @var string */
 	protected $text;
-	/** @var Closure */
+	/** @var Closure|null */
 	private $onSubmit;
 	/** @var Closure|null */
 	private $onClose;
@@ -23,7 +23,7 @@ class MenuForm extends Form{
 	 * @param string       $title
 	 * @param string       $text
 	 * @param Button[]     $buttons
-	 * @param Closure      $onSubmit
+	 * @param Closure|null $onSubmit
 	 * @param Closure|null $onClose
 	 */
 	public function __construct(string $title, string $text = "", array $buttons = [], ?Closure $onSubmit = null, ?Closure $onClose = null){
@@ -43,10 +43,30 @@ class MenuForm extends Form{
 	/**
 	 * @param Button ...$buttons
 	 *
-	 * @return $this
+	 * @return self
 	 */
 	public function append(Button ...$buttons) : self{
 		$this->buttons = array_merge($this->buttons, $buttons);
+		return $this;
+	}
+
+	/**
+	 * @param Closure|null $onSubmit
+	 *
+	 * @return self
+	 */
+	public function setOnSubmit(?Closure $onSubmit) : self{
+		$this->onSubmit = $onSubmit;
+		return $this;
+	}
+
+	/**
+	 * @param Closure|null $onClose
+	 *
+	 * @return self
+	 */
+	public function setOnClose(?Closure $onClose) : self{
+		$this->onClose = $onClose;
 		return $this;
 	}
 
