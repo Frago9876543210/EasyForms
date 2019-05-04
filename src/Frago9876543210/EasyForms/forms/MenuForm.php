@@ -26,7 +26,7 @@ class MenuForm extends Form{
 	 * @param Closure      $onSubmit
 	 * @param Closure|null $onClose
 	 */
-	public function __construct(string $title, string $text, array $buttons = [], ?Closure $onSubmit = null, ?Closure $onClose = null){
+	public function __construct(string $title, string $text = "", array $buttons = [], ?Closure $onSubmit = null, ?Closure $onClose = null){
 		parent::__construct($title);
 		$this->text = $text;
 		$this->buttons = $buttons;
