@@ -8,10 +8,11 @@ use Closure;
 use Frago9876543210\EasyForms\elements\Button;
 use pocketmine\{form\FormValidationException, Player, utils\Utils};
 use function array_merge;
+use function is_string;
 
 class MenuForm extends Form{
 	/** @var Button[] */
-	protected $buttons;
+	protected $buttons = [];
 	/** @var string */
 	protected $text;
 	/** @var Closure|null */
@@ -20,16 +21,16 @@ class MenuForm extends Form{
 	private $onClose;
 
 	/**
-	 * @param string       $title
-	 * @param string       $text
-	 * @param Button[]     $buttons
-	 * @param Closure|null $onSubmit
-	 * @param Closure|null $onClose
+	 * @param string          $title
+	 * @param string          $text
+	 * @param Button|string[] $buttons
+	 * @param Closure|null    $onSubmit
+	 * @param Closure|null    $onClose
 	 */
 	public function __construct(string $title, string $text = "", array $buttons = [], ?Closure $onSubmit = null, ?Closure $onClose = null){
 		parent::__construct($title);
 		$this->text = $text;
-		$this->buttons = $buttons;
+		$this->append(...$buttons);
 		$this->setOnSubmit($onSubmit);
 		$this->setOnClose($onClose);
 	}
@@ -45,11 +46,14 @@ class MenuForm extends Form{
 	}
 
 	/**
-	 * @param Button ...$buttons
+	 * @param Button|string ...$buttons
 	 *
 	 * @return self
 	 */
-	public function append(Button ...$buttons) : self{
+	public function append(...$buttons) : self{
+		if(isset($buttons[0]) && is_string($buttons[0])){
+			$buttons = Button::createFromList(...$buttons);
+		}
 		$this->buttons = array_merge($this->buttons, $buttons);
 		return $this;
 	}
@@ -74,7 +78,8 @@ class MenuForm extends Form{
 	 */
 	public function setOnClose(?Closure $onClose) : self{
 		if($onClose !== null){
-			Utils::validateCallableSignature(function(Player $player) : void{}, $onClose);
+			Utils::validateCallableSignature(function(Player $player) : void{
+			}, $onClose);
 			$this->onClose = $onClose;
 		}
 		return $this;
