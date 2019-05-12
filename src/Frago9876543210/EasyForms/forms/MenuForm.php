@@ -78,8 +78,7 @@ class MenuForm extends Form{
 	 */
 	public function setOnClose(?Closure $onClose) : self{
 		if($onClose !== null){
-			Utils::validateCallableSignature(function(Player $player) : void{
-			}, $onClose);
+			Utils::validateCallableSignature(function(Player $player) : void{}, $onClose);
 			$this->onClose = $onClose;
 		}
 		return $this;
