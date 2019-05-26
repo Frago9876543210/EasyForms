@@ -26,7 +26,7 @@ class ModalForm extends Form{
 	 * @param string  $yesButton
 	 * @param string  $noButton
 	 */
-	public function __construct(string $title, string $text, Closure $onSubmit, $yesButton = "gui.yes", string $noButton = "gui.no"){
+	public function __construct(string $title, string $text, Closure $onSubmit, string $yesButton = "gui.yes", string $noButton = "gui.no"){
 		parent::__construct($title);
 		$this->text = $text;
 		$this->yesButton = $yesButton;
