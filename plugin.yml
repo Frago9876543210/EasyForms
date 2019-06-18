@@ -1,4 +1,4 @@
 name: EasyForms
 main: Frago9876543210\EasyForms\EasyForms
-version: 1.3.0
-api: [3.8.0, 4.0.0]
+version: 1.4.0
+api: 4.0.0

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\forms;
 
 use Closure;
-use pocketmine\{form\FormValidationException, Player, utils\Utils};
+use pocketmine\{form\FormValidationException, player\Player, utils\Utils};
 use function gettype;
 use function is_bool;
 

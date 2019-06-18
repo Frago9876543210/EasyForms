@@ -6,7 +6,7 @@ namespace Frago9876543210\EasyForms\forms;
 
 use Closure;
 use Frago9876543210\EasyForms\elements\Button;
-use pocketmine\{form\FormValidationException, Player, utils\Utils};
+use pocketmine\{form\FormValidationException, player\Player, utils\Utils};
 use function array_merge;
 use function is_string;
 
