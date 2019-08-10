@@ -59,20 +59,6 @@ class ModalForm extends Form{
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getYesButtonText() : string{
-		return $this->yesButton;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getNoButtonText() : string{
-		return $this->noButton;
-	}
-
-	/**
 	 * @return array
 	 */
 	protected function serializeFormData() : array{
