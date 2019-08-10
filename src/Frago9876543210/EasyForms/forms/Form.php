@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Frago9876543210\EasyForms\forms;
 
-use Closure;
 use function array_merge;
 
 abstract class Form implements \pocketmine\form\Form{
@@ -13,11 +12,7 @@ abstract class Form implements \pocketmine\form\Form{
 	protected const TYPE_CUSTOM_FORM = "custom_form";
 
 	/** @var string */
-	private $title;
-	/** @var Closure|null */
-	private $onCreate;
-	/** @var Closure|null */
-	private $onDestroy;
+	protected $title;
 
 	/**
 	 * @param string $title
@@ -26,19 +21,10 @@ abstract class Form implements \pocketmine\form\Form{
 		$this->title = $title;
 	}
 
-	public function __destruct(){
-		if($this->onDestroy !== null){
-			($this->onDestroy)();
-		}
-	}
-
 	/**
 	 * @return array
 	 */
 	final public function jsonSerialize() : array{
-		if($this->onCreate !== null){
-			($this->onCreate)();
-		}
 		return array_merge([
 			"title" => $this->getTitle(), "type" => $this->getType()
 		], $this->serializeFormData());
@@ -58,26 +44,6 @@ abstract class Form implements \pocketmine\form\Form{
 	 */
 	public function setTitle(string $title) : self{
 		$this->title = $title;
-		return $this;
-	}
-
-	/**
-	 * @param Closure $onCreate
-	 *
-	 * @return $this
-	 */
-	public function setOnCreate(Closure $onCreate) : self{
-		$this->onCreate = $onCreate;
-		return $this;
-	}
-
-	/**
-	 * @param Closure $onDestroy
-	 *
-	 * @return $this
-	 */
-	public function setOnDestroy(Closure $onDestroy) : self{
-		$this->onDestroy = $onDestroy;
 		return $this;
 	}
 
