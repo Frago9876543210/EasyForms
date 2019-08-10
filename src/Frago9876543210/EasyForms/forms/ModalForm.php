@@ -42,7 +42,7 @@ class ModalForm extends Form{
 	 *
 	 * @return ModalForm
 	 */
-	public static function createConfirmForm(string $title, string $text, Closure $onConfirm) : self{
+	public static function confirm(string $title, string $text, Closure $onConfirm) : self{
 		Utils::validateCallableSignature(function(Player $player) : void{}, $onConfirm);
 		return new self($title, $text, function(Player $player, bool $response) use ($onConfirm): void{
 			if($response){
