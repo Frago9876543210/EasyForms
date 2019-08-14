@@ -63,9 +63,7 @@ class MenuForm extends Form{
 	public function append(...$buttons) : self{
 		if(isset($buttons[0])){
 			if(is_string($buttons[0])){
-				$buttons = array_map(function(string $text) : Button{
-					return new Button($text);
-				}, $buttons);
+				$buttons = array_map(function(string $text) : Button{ return new Button($text); }, $buttons);
 			}else{
 				(function(Button ...$_){})($buttons);
 			}
