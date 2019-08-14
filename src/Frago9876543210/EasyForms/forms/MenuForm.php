@@ -8,6 +8,7 @@ use Closure;
 use Frago9876543210\EasyForms\elements\Button;
 use pocketmine\form\FormValidationException;
 use pocketmine\player\Player;
+use function array_map;
 use function array_merge;
 use function is_int;
 use function is_string;
@@ -41,7 +42,8 @@ class MenuForm extends Form{
 	 * @return callable
 	 */
 	protected function getOnSubmitCallableSignature() : callable{
-		return function(Player $player, int $index, string $title){};
+		return function(Player $player, int $index, string $title){
+		};
 	}
 
 	/**
@@ -54,11 +56,22 @@ class MenuForm extends Form{
 		];
 	}
 
-	public function append(...$buttons){
+	/**
+	 * @param Button|string ...$buttons
+	 * @return $this
+	 */
+	public function append(...$buttons) : self{
 		if(isset($buttons[0])){
-			is_string($buttons[0]) ? (function(string ...$_){})($buttons) : (function(Button ...$_){})($buttons);
+			if(is_string($buttons[0])){
+				$buttons = array_map(function(string $text) : Button{
+					return new Button($text);
+				}, $buttons);
+			}else{
+				(function(Button ...$_){})($buttons);
+			}
 		}
 		$this->buttons = array_merge($this->buttons, $buttons);
+		return $this;
 	}
 
 	final public function handleResponse(Player $player, $data) : void{

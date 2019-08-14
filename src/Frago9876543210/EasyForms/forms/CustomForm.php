@@ -15,7 +15,7 @@ class CustomForm extends Form{
 	/** @var Element[] */
 	private $elements;
 
-	public function __construct(string $title, array $elements, Closure $onSubmit, ?Closure $onClose){
+	public function __construct(string $title, array $elements, Closure $onSubmit, ?Closure $onClose = null){
 		parent::__construct($title);
 		$this->elements = $elements;
 		$this->onSubmit($onSubmit);
@@ -45,8 +45,13 @@ class CustomForm extends Form{
 		return ["content" => $this->elements];
 	}
 
-	public function append(Element ...$elements){
+	/**
+	 * @param Element ...$elements
+	 * @return $this
+	 */
+	public function append(Element ...$elements) : self{
 		$this->elements = array_merge($this->elements, $elements);
+		return $this;
 	}
 
 	final public function handleResponse(Player $player, $data) : void{
