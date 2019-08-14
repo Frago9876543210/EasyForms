@@ -42,8 +42,7 @@ class MenuForm extends Form{
 	 * @return callable
 	 */
 	protected function getOnSubmitCallableSignature() : callable{
-		return function(Player $player, int $index, string $title){
-		};
+		return function(Player $player, Button $selected) : void{};
 	}
 
 	/**

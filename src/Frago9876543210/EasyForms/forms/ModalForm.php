@@ -46,8 +46,7 @@ class ModalForm extends Form{
 	 * @return callable
 	 */
 	protected function getOnSubmitCallableSignature() : callable{
-		return function(Player $player, bool $response) : void{
-		};
+		return function(Player $player, bool $response) : void{};
 	}
 
 	/**
