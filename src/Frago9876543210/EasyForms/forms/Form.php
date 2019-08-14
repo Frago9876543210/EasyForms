@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Frago9876543210\EasyForms\forms;
 
+use Closure;
+use pocketmine\player\Player;
+use pocketmine\utils\Utils;
 use function array_merge;
 
 abstract class Form implements \pocketmine\form\Form{
@@ -12,7 +15,12 @@ abstract class Form implements \pocketmine\form\Form{
 	protected const TYPE_CUSTOM_FORM = "custom_form";
 
 	/** @var string */
-	protected $title;
+	private $title;
+
+	/** @var Closure|null */
+	protected $onSubmit;
+	/** @var Closure|null */
+	protected $onClose;
 
 	/**
 	 * @param string $title
@@ -22,38 +30,47 @@ abstract class Form implements \pocketmine\form\Form{
 	}
 
 	/**
-	 * @return array
-	 */
-	final public function jsonSerialize() : array{
-		return array_merge([
-			"title" => $this->getTitle(), "type" => $this->getType()
-		], $this->serializeFormData());
-	}
-
-	/**
 	 * @return string
 	 */
-	public function getTitle() : string{
-		return $this->title;
-	}
+	abstract protected function getType() : string;
 
 	/**
-	 * @param string $title
-	 *
-	 * @return $this
+	 * @return callable
 	 */
-	public function setTitle(string $title) : self{
-		$this->title = $title;
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	abstract public function getType() : string;
+	abstract protected function getOnSubmitCallableSignature() : callable;
 
 	/**
 	 * @return array
 	 */
 	abstract protected function serializeFormData() : array;
+
+	/**
+	 * @param Closure $onSubmit
+	 * @return $this
+	 */
+	public function onSubmit(Closure $onSubmit) : self{
+		Utils::validateCallableSignature($this->getOnSubmitCallableSignature(), $onSubmit);
+		$this->onSubmit = $onSubmit;
+		return $this;
+	}
+
+	/**
+	 * @param Closure $onClose
+	 * @return $this
+	 */
+	public function onClose(Closure $onClose) : self{
+		Utils::validateCallableSignature(function(Player $player) : void{}, $onClose);
+		$this->onClose = $onClose;
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	final public function jsonSerialize() : array{
+		return array_merge(
+			["title" => $this->title, "type" => $this->getType()],
+			$this->serializeFormData()
+		);
+	}
 }

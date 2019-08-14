@@ -5,43 +5,27 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\forms;
 
 use Closure;
-use pocketmine\{form\FormValidationException, player\Player, utils\Utils};
-use function gettype;
+use pocketmine\form\FormValidationException;
+use pocketmine\player\Player;
+use pocketmine\utils\Utils;
 use function is_bool;
 
 class ModalForm extends Form{
 	/** @var string */
-	protected $text;
+	private $content;
 	/** @var string */
 	private $yesButton;
 	/** @var string */
 	private $noButton;
-	/** @var Closure */
-	private $onSubmit;
 
-	/**
-	 * @param string  $title
-	 * @param string  $text
-	 * @param Closure $onSubmit
-	 * @param string  $yesButton
-	 * @param string  $noButton
-	 */
-	public function __construct(string $title, string $text, Closure $onSubmit, string $yesButton = "gui.yes", string $noButton = "gui.no"){
+	public function __construct(string $title, string $content, Closure $onSubmit, string $yesButton = "gui.yes", string $noButton = "gui.no"){
 		parent::__construct($title);
-		$this->text = $text;
+		$this->content = $content;
+		$this->onSubmit($onSubmit);
 		$this->yesButton = $yesButton;
 		$this->noButton = $noButton;
-		Utils::validateCallableSignature(function(Player $player, bool $response) : void{}, $onSubmit);
-		$this->onSubmit = $onSubmit;
 	}
 
-	/**
-	 * @param string  $title
-	 * @param string  $text
-	 * @param Closure $onConfirm
-	 *
-	 * @return ModalForm
-	 */
 	public static function confirm(string $title, string $text, Closure $onConfirm) : self{
 		Utils::validateCallableSignature(function(Player $player) : void{}, $onConfirm);
 		return new self($title, $text, function(Player $player, bool $response) use ($onConfirm): void{
@@ -54,8 +38,16 @@ class ModalForm extends Form{
 	/**
 	 * @return string
 	 */
-	final public function getType() : string{
+	protected function getType() : string{
 		return self::TYPE_MODAL;
+	}
+
+	/**
+	 * @return callable
+	 */
+	protected function getOnSubmitCallableSignature() : callable{
+		return function(Player $player, bool $response) : void{
+		};
 	}
 
 	/**
@@ -63,16 +55,21 @@ class ModalForm extends Form{
 	 */
 	protected function serializeFormData() : array{
 		return [
-			"content" => $this->text,
+			"content" => $this->content,
 			"button1" => $this->yesButton,
 			"button2" => $this->noButton
 		];
 	}
 
 	final public function handleResponse(Player $player, $data) : void{
-		if(!is_bool($data)){
-			throw new FormValidationException("Expected bool, got " . gettype($data));
+		if($data === null){
+			if($this->onClose !== null){
+				($this->onClose)($player);
+			}
+		}elseif(is_bool($data)){
+			($this->onSubmit)($player, $data);
+		}else{
+			throw new FormValidationException("Expected bool or null, got " . gettype($data));
 		}
-		($this->onSubmit)($player, $data);
 	}
 }

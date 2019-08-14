@@ -6,89 +6,43 @@ namespace Frago9876543210\EasyForms\forms;
 
 use Closure;
 use Frago9876543210\EasyForms\elements\Button;
-use pocketmine\{form\FormValidationException, player\Player, utils\Utils};
+use pocketmine\form\FormValidationException;
+use pocketmine\player\Player;
 use function array_merge;
+use function is_int;
 use function is_string;
 
 class MenuForm extends Form{
-	/** @var Button[] */
-	protected $buttons = [];
 	/** @var string */
-	protected $text;
-	/** @var Closure|null */
-	private $onSubmit;
-	/** @var Closure|null */
-	private $onClose;
+	private $content;
+	/** @var Button[] */
+	private $buttons;
 
-	/**
-	 * @param string          $title
-	 * @param string          $text
-	 * @param Button|string[] $buttons
-	 * @param Closure|null    $onSubmit
-	 * @param Closure|null    $onClose
-	 */
-	public function __construct(string $title, string $text = "", array $buttons = [], ?Closure $onSubmit = null, ?Closure $onClose = null){
+	public function __construct(string $title, string $content, array $buttons = [], ?Closure $onSubmit = null, ?Closure $onClose = null){
 		parent::__construct($title);
-		$this->text = $text;
-		$this->append(...$buttons);
-		$this->setOnSubmit($onSubmit);
-		$this->setOnClose($onClose);
-	}
-
-	/**
-	 * @param string $text
-	 *
-	 * @return self
-	 */
-	public function setText(string $text) : self{
-		$this->text = $text;
-		return $this;
-	}
-
-	/**
-	 * @param Button|string ...$buttons
-	 *
-	 * @return self
-	 */
-	public function append(...$buttons) : self{
-		if(isset($buttons[0]) && is_string($buttons[0])){
-			$buttons = Button::createFromList(...$buttons);
-		}
-		$this->buttons = array_merge($this->buttons, $buttons);
-		return $this;
-	}
-
-	/**
-	 * @param Closure|null $onSubmit
-	 *
-	 * @return self
-	 */
-	public function setOnSubmit(?Closure $onSubmit) : self{
+		$this->content = $content;
+		$this->append($buttons);
 		if($onSubmit !== null){
-			Utils::validateCallableSignature(function(Player $player, Button $selected) : void{}, $onSubmit);
-			$this->onSubmit = $onSubmit;
+			$this->onSubmit($onSubmit);
 		}
-		return $this;
-	}
-
-	/**
-	 * @param Closure|null $onClose
-	 *
-	 * @return self
-	 */
-	public function setOnClose(?Closure $onClose) : self{
 		if($onClose !== null){
-			Utils::validateCallableSignature(function(Player $player) : void{}, $onClose);
-			$this->onClose = $onClose;
+			$this->onClose($onClose);
 		}
-		return $this;
 	}
 
 	/**
 	 * @return string
 	 */
-	final public function getType() : string{
+	protected function getType() : string{
 		return self::TYPE_MENU;
+	}
+
+	/**
+	 * @return callable
+	 */
+	protected function getOnSubmitCallableSignature() : callable{
+		return function(Player $player, int $index, string $title){
+		};
 	}
 
 	/**
@@ -97,14 +51,21 @@ class MenuForm extends Form{
 	protected function serializeFormData() : array{
 		return [
 			"buttons" => $this->buttons,
-			"content" => $this->text
+			"content" => $this->content
 		];
+	}
+
+	public function append(...$buttons){
+		if(isset($buttons[0])){
+			is_string($buttons[0]) ? (function(string ...$_){})($buttons) : (function(Button ...$_){})($buttons);
+		}
+		$this->buttons = array_merge($this->buttons, $buttons);
 	}
 
 	final public function handleResponse(Player $player, $data) : void{
 		if($data === null){
 			if($this->onClose !== null){
-				($this->onClose)($player, $data);
+				($this->onClose)($player);
 			}
 		}elseif(is_int($data)){
 			if(!isset($this->buttons[$data])){

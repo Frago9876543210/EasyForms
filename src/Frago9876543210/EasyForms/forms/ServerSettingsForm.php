@@ -9,7 +9,7 @@ use Frago9876543210\EasyForms\elements\Image;
 
 class ServerSettingsForm extends CustomForm{
 	/** @var Image|null */
-	protected $image;
+	private $image;
 
 	/**
 	 * @param string        $title

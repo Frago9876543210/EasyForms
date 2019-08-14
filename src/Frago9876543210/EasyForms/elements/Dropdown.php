@@ -8,9 +8,9 @@ use pocketmine\form\FormValidationException;
 
 class Dropdown extends Element{
 	/** @var string[] */
-	protected $options;
+	private $options;
 	/** @var int */
-	protected $default;
+	private $default;
 
 	/**
 	 * @param string   $text

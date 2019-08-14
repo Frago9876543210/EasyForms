@@ -9,9 +9,9 @@ use function is_string;
 
 class Input extends Element{
 	/** @var string */
-	protected $placeholder;
+	private $placeholder;
 	/** @var string */
-	protected $default;
+	private $default;
 
 	/**
 	 * @param string $text

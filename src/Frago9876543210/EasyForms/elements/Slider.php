@@ -11,13 +11,13 @@ use function is_int;
 
 class Slider extends Element{
 	/** @var float */
-	protected $min;
+	private $min;
 	/** @var float */
-	protected $max;
+	private $max;
 	/** @var float */
-	protected $step = 1.0;
+	private $step = 1.0;
 	/** @var float */
-	protected $default;
+	private $default;
 
 	/**
 	 * @param string     $text

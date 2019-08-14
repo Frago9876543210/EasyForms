@@ -6,9 +6,9 @@ namespace Frago9876543210\EasyForms\elements;
 
 class Button extends Element{
 	/** @var Image|null */
-	protected $image;
+	private $image;
 	/** @var string */
-	protected $type;
+	private $type;
 
 	/**
 	 * @param string     $text
@@ -17,19 +17,6 @@ class Button extends Element{
 	public function __construct(string $text, ?Image $image = null){
 		parent::__construct($text);
 		$this->image = $image;
-	}
-
-	/**
-	 * @param string ...$texts
-	 *
-	 * @return Button[]
-	 */
-	public static function createFromList(string ...$texts) : array{
-		$buttons = [];
-		foreach($texts as $text){
-			$buttons[] = new self($text);
-		}
-		return $buttons;
 	}
 
 	/**
