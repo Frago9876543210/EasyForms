@@ -35,8 +35,7 @@ class CustomForm extends Form{
 	 * @return callable
 	 */
 	protected function getOnSubmitCallableSignature() : callable{
-		return function(Player $player, CustomFormResponse $response) : void{
-		};
+		return function(Player $player, CustomFormResponse $response) : void{};
 	}
 
 	/**
