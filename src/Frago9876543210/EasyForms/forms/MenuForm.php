@@ -17,12 +17,12 @@ class MenuForm extends Form{
 	/** @var string */
 	private $content;
 	/** @var Button[] */
-	private $buttons;
+	private $buttons = [];
 
 	public function __construct(string $title, string $content, array $buttons = [], ?Closure $onSubmit = null, ?Closure $onClose = null){
 		parent::__construct($title);
 		$this->content = $content;
-		$this->append($buttons);
+		$this->append(...$buttons);
 		if($onSubmit !== null){
 			$this->onSubmit($onSubmit);
 		}
@@ -57,7 +57,7 @@ class MenuForm extends Form{
 
 	/**
 	 * @param Button|string ...$buttons
-	 * @return $this
+	 * @return self
 	 */
 	public function append(...$buttons) : self{
 		if(isset($buttons[0])){

@@ -46,7 +46,7 @@ abstract class Form implements \pocketmine\form\Form{
 
 	/**
 	 * @param Closure $onSubmit
-	 * @return $this
+	 * @return self
 	 */
 	public function onSubmit(Closure $onSubmit) : self{
 		Utils::validateCallableSignature($this->getOnSubmitCallableSignature(), $onSubmit);
@@ -56,7 +56,7 @@ abstract class Form implements \pocketmine\form\Form{
 
 	/**
 	 * @param Closure $onClose
-	 * @return $this
+	 * @return self
 	 */
 	public function onClose(Closure $onClose) : self{
 		Utils::validateCallableSignature(function(Player $player) : void{}, $onClose);

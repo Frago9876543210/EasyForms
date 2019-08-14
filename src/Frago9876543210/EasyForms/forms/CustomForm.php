@@ -13,7 +13,7 @@ use function is_array;
 
 class CustomForm extends Form{
 	/** @var Element[] */
-	private $elements;
+	private $elements = [];
 
 	public function __construct(string $title, array $elements, Closure $onSubmit, ?Closure $onClose = null){
 		parent::__construct($title);
@@ -47,7 +47,7 @@ class CustomForm extends Form{
 
 	/**
 	 * @param Element ...$elements
-	 * @return $this
+	 * @return self
 	 */
 	public function append(Element ...$elements) : self{
 		$this->elements = array_merge($this->elements, $elements);
