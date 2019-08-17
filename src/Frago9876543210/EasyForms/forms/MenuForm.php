@@ -19,7 +19,7 @@ class MenuForm extends Form{
 	/** @var Button[] */
 	private $buttons = [];
 
-	public function __construct(string $title, string $content, array $buttons = [], ?Closure $onSubmit = null, ?Closure $onClose = null){
+	public function __construct(string $title, string $content = "", array $buttons = [], ?Closure $onSubmit = null, ?Closure $onClose = null){
 		parent::__construct($title);
 		$this->content = $content;
 		$this->append(...$buttons);
