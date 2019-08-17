@@ -68,6 +68,7 @@ class CustomForm extends Form{
 				$element->validate($value);
 				$element->setValue($value);
 			}
+			($this->onSubmit)($player, new CustomFormResponse($this->elements));
 		}else{
 			throw new FormValidationException("Expected array or null, got " . gettype($data));
 		}
