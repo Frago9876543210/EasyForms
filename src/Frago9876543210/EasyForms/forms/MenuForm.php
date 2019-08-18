@@ -64,7 +64,7 @@ class MenuForm extends Form{
 			if(is_string($buttons[0])){
 				$buttons = array_map(function(string $text) : Button{ return new Button($text); }, $buttons);
 			}else{
-				(function(Button ...$_){})($buttons);
+				(function(Button ...$_){})(...$buttons);
 			}
 		}
 		$this->buttons = array_merge($this->buttons, $buttons);
