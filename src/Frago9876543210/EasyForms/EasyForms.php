@@ -30,7 +30,7 @@ class EasyForms extends PluginBase implements Listener{
 		$pk = new ServerSettingsResponsePacket();
 		$pk->formId = $id;
 		$pk->formData = json_encode($form);
-		if($player->sendDataPacket($pk)){
+		if($player->getNetworkSession()->sendDataPacket($pk)){
 			$formsProperty = $reflection->getProperty("forms");
 			$formsProperty->setAccessible(true);
 
