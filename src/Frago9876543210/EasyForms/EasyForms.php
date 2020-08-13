@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms;
 
 use Frago9876543210\EasyForms\forms\CustomForm;
-use pocketmine\{player\Player, plugin\PluginBase};
+use pocketmine\{Player, plugin\PluginBase};
 use pocketmine\event\{Listener, server\DataPacketReceiveEvent};
 use pocketmine\network\mcpe\protocol\{ServerSettingsRequestPacket, ServerSettingsResponsePacket};
 use ReflectionObject;
@@ -30,7 +30,7 @@ class EasyForms extends PluginBase implements Listener{
 		$pk = new ServerSettingsResponsePacket();
 		$pk->formId = $id;
 		$pk->formData = json_encode($form);
-		if($player->getNetworkSession()->sendDataPacket($pk)){
+		if($player->sendDataPacket($pk)) {
 			$formsProperty = $reflection->getProperty("forms");
 			$formsProperty->setAccessible(true);
 
@@ -43,9 +43,9 @@ class EasyForms extends PluginBase implements Listener{
 
 	public function onDataPacketReceive(DataPacketReceiveEvent $e) : void{
 		$pk = $e->getPacket();
-		if($pk instanceof ServerSettingsRequestPacket){
-			($ev = new ServerSettingsRequestEvent($player = $e->getOrigin()->getPlayer()))->call();
-			if(($form = $ev->getForm()) !== null){
+		if($pk instanceof ServerSettingsRequestPacket) {
+			($ev = new ServerSettingsRequestEvent($player = $e->getPlayer()))->call();
+			if(($form = $ev->getForm()) !== null) {
 				$this->sendSetting($player, $form);
 			}
 		}

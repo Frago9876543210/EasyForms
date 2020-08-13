@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Frago9876543210\EasyForms\forms;
 
 use Closure;
-use pocketmine\player\Player;
+use pocketmine\Player;
 use pocketmine\utils\Utils;
 use function array_merge;
 

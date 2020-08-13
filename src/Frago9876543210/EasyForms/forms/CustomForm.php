@@ -7,7 +7,7 @@ namespace Frago9876543210\EasyForms\forms;
 use Closure;
 use Frago9876543210\EasyForms\elements\Element;
 use pocketmine\form\FormValidationException;
-use pocketmine\player\Player;
+use pocketmine\Player;
 use function array_merge;
 use function is_array;
 
