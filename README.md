@@ -1,4 +1,7 @@
 # EasyForms
+
+⚠️ **Deprecated! If you're looking for good PM4 forms API consider [new forms library](https://github.com/Frago9876543210/forms) with PHP 8.0+ support and phpstan integration**
+
 Plugin for pmmp that allow you create GUI in a few clicks.
 
 ### Code samples
